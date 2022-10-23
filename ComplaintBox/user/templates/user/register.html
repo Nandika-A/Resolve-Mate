@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <form method = "POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div>
+            <button>Sign Up</button>
+        </div>
+    </form>
+    <div>
+        <small>Already have an account?</small>
+        <a href = "#">Sign In</a>
+    </div>
+</div>
