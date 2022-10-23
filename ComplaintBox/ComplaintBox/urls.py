@@ -18,4 +18,6 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # to direct user to registration page & login page
+    path('user/', include("user.urls"))
 ]

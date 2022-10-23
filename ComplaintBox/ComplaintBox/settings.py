@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@_44f4(s$p((-yz0+(z0=)&9k4j!1&f-f%s%y)chtprtkp!=(r'
+SECRET_KEY = 'django-insecure-@_naf4(s$p((-yz0+(z0=)&9k4j!1&f-f%s%y)chtprtkp!=(r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'user',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -72,12 +73,23 @@ WSGI_APPLICATION = 'ComplaintBox.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
+""""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+"""
+DATABASES = {
+   'default': {
+    'ENGINE': 'djongo',
+    'NAME': 'admin',
+    'ENFORCE_SCHEMA': False,
+    'CLIENT': {
+                'host': 'mongodb+srv://NandikaA:lqiuBZLGXNVKOjGK@cluster0.agtddyg.mongodb.net/ComplaintBox?retryWrites=true&w=majority'
+            }  
+ }
 }
 
 
