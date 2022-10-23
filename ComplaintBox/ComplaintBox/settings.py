@@ -82,14 +82,15 @@ DATABASES = {
 }
 """
 DATABASES = {
-   'default': {
-    'ENGINE': 'djongo',
-    'NAME': 'admin',
-    'ENFORCE_SCHEMA': False,
-    'CLIENT': {
-                'host': 'mongodb+srv://NandikaA:lqiuBZLGXNVKOjGK@cluster0.agtddyg.mongodb.net/ComplaintBox?retryWrites=true&w=majority'
-            }  
- }
+    'default': {
+        #'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'qMRzb5IK8cWmH1XFzd1X',
+        'HOST': 'containers-us-west-66.railway.app',
+        'PORT': '5621',
+    }
 }
 
 
