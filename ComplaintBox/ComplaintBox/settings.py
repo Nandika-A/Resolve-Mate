@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'worker',
+    'home',
     'user',
     'django.contrib.postgres',
     'django.contrib.admin',
@@ -143,3 +145,5 @@ MEDIA_URL = '/media/'
 # Path where media is stored
 import os
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+AUTH_USER_MODEL = "user.UserProfile"
