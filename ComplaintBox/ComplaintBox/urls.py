@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 
 #image lines start
 from django.conf import settings
@@ -30,5 +30,7 @@ if settings.DEBUG:
 urlpatterns = [
     path('admin/', admin.site.urls),
     # to direct user to registration page & login page
-    #path('user/', include("user.urls"))
+    path('user/', include("user.urls")),
+    path('', include("home.urls")),
+    #path('worker/', include("worker.urls"))
 ]
