@@ -90,9 +90,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': 'qMRzb5IK8cWmH1XFzd1X',
-        'HOST': 'containers-us-west-66.railway.app',
-        'PORT': '5621',
+        'PASSWORD': '0nMQgFCrb14q5RH27BQ5',
+        'HOST': 'containers-us-west-54.railway.app',
+        'PORT': '7036',
     }
 }
 
@@ -147,3 +147,10 @@ import os
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 AUTH_USER_MODEL = "user.UserProfile"
+
+AUTH_WORKER_MODEL = 'worker.WorkerProfile'
+
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_AUTHENTICATION_METHOD = 'Email'
