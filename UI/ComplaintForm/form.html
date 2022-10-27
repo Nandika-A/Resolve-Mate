@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Responsive Registration Form</title>
+  <meta name="viewport" content="width=device-width,
+      initial-scale=1.0" />
+  <link rel="stylesheet" href="styleform2.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="form-title">Complaint Form</h1>
+    <form action="#">
+      <div class="main-user-info">
+        <div class="user-input-box">
+          <label for="">Worker Type:</label>
+          <select class="country " id="wtype">
+            <option value="">Select worker required</option>
+            <option value="Electrician">Electrician</option>
+            <option value="Plumber">Plumber</option>
+            <option value="Carpenter">Carpenter</option>
+            <option value="Nurse">Nurse</option>
+            <option value="Painter">Painter</option>
+            <option value="Technician">Technician</option>
+          </select>
+          <div class="arrow"></div>
+        </div>
+        <div class="user-input-box">
+          <label for="">Complaint:</label>
+          <select class="country" id="complaint">
+            <option value="Improper Electrical Wiring">Improper Electrical Wiring</option>
+            <option value="Repair and replace equipments">Repair and replace equipments</option>
+            <option value="Installing electrical apparatus">Installing electrical apparatus</option>
+            <option value="Improper Drainage">Improper Drainage</option>
+            <option value="Repair water supply lines">Repair water supply lines</option>
+            <option value="Leakage issues">Leakage issues</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="arrow arrow2"></div>
+        </div>
+        <div class="user-input-box">
+          <label for="">Additional Complaint:</label>
+          <textarea name="" id="additional" cols="79" rows="8" placeholder="Enter Custom Complaint"></textarea>
+        </div>
+        <!-- <div class="user-input-box">
+            <label for="fullName">Full Name</label>
+            <input type="text"
+                    id="fullName"
+                    name="fullName"
+                    placeholder="Enter Full Name"/>
+          </div> -->
+        <!-- <div class="user-input-box">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Enter Username" />
+        </div> -->
+        <!-- <div class="user-input-box">
+            <label for="email">Email</label>
+            <input type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter Email"/>
+          </div> -->
+        <!-- <div class="user-input-box">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    placeholder="Enter Phone Number"/>
+          </div> -->
+        <!-- <div class="user-input-box">
+            <label for="password">Password</label>
+            <input type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter Password"/>
+          </div> -->
+        <!-- <div class="user-input-box">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Confirm Password"/>
+          </div> -->
+        <!-- <div class="gender-details-box">
+          <span class="gender-title">Gender</span>
+          <div class="gender-category">
+            <input type="radio" name="gender" id="male">
+            <label for="male">Male</label>
+            <input type="radio" name="gender" id="female">
+            <label for="female">Female</label>
+            <input type="radio" name="gender" id="other">
+            <label for="other">Other</label>
+          </div>
+        </div> -->
+        <!-- <div class="user-input-box">
+          <label for="">Worker Type:</label>
+          <select class="country " id="wtype">
+            <option value="">Select worker required</option>
+            <option value="">Electrician</option>
+            <option value="">Plumber</option>
+            <option value="">Carpenter</option>
+            <option value="">Other</option>
+          </select>
+          <div class="arrow"></div>
+        </div> -->
+        <div class="user-input-box">
+          <label for="">Upload Image</label>
+          <input type="file" id="" onchange="readURL(this)" accept="Image/*">
+        </div>
+      </div>
+      <div class="box">
+        <input type="checkbox" class="check-button" id="terms">
+        <label for="terms" class="check">I accept the terms and conditions</label>
+      </div>
+      <div class="form-submit-btn">
+        <input type="submit" value="Submit">
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>
