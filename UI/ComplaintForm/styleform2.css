@@ -10,7 +10,8 @@ body{
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background: url(bg-image.jpg);
+    background: url("https://image.shutterstock.com/image-photo/persons-hand-inserting-complaint-letter-260nw-1289075314.jpg");
+    background-repeat: no-repeat;
     background-size: cover;
 }
 
@@ -35,25 +36,21 @@ body{
     border-bottom: solid 1px white;
 }
 
-.main-user-info{
+.main-form-info{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 20px 0;
 }
 
-/* .user-input-box:nth-child(2n){
-    justify-content: end;
-} */
-
-.user-input-box{
+.input-box{
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     padding-bottom: 15px;
 }
 
-.user-input-box label{
+.input-box label{
     /* width: 100%; */
     color: white;
     font-size: 20px;
@@ -61,7 +58,7 @@ body{
     margin: 5px 0;
 }
 
-.user-input-box input,.country{
+.input-box input,.select-box{
     height: 40px;
     width: 95%;
     border-radius: 7px;
@@ -69,20 +66,26 @@ body{
     border: 1px solid grey;
     padding: 0 10px;
 }
-
+.imageInput{
+    border:none !important;
+    color: white;
+} 
 textarea{
     border-radius: 7px;
     outline: none;
-    border: 1px solid grey;
+    border: 1.6px solid #baaaaa;
+    color: #726868;
     padding: 16px 10px;
+    transition: all 0.2s ease;
     font-size: 14px;
     width: 95%;
 }
 
-textarea:hover{
+textarea:hover,textarea:focus{
     background-color: #fafafa;
     border-color: black;
     outline: none;
+
 }
 
 .form-submit-btn input{
@@ -110,11 +113,7 @@ textarea:hover{
     color: rgb(255, 255, 255);
 }
 
-.country{
-    /* display: inline-block;
-    width: 95%;
-    padding: 0px 10px;
-    height: 30px; */
+.select-box{
     cursor: pointer;
     border: 1.6px solid #baaaaa;
     color: #726868;
@@ -122,18 +121,11 @@ textarea:hover{
     transition: all 0.2s ease;
 }
 
-/* .country:hover, .country:focus{
-    color: blue;
-    background: #ebe4e4;
-    border-color: blue;
-    outline: none;
-}  */
-.country::-ms-expand{
+.select-box::-ms-expand{
     display: none;
 }
 
-.country:hover, .country:focus{
-    /* color: blue; */
+.select-box:hover, .select-box:focus{
     background-color: #fafafa;
     border-color: black;
     outline: none;
@@ -141,7 +133,6 @@ textarea:hover{
 
 .arrow{
     position: relative;
-    top:calc(50% - 4px);
     right: 25px;
     margin: 18px 3px 0 0 ;
     width: 0;
@@ -157,7 +148,7 @@ textarea:hover{
 top: 0px;
 }
 
-.country:hover + .arrow, .country:focus + .arrow{
+.select-box:hover + .arrow, .select-box:focus + .arrow{
     border-top-color: blue;
 }
 
@@ -165,7 +156,9 @@ top: 0px;
     display: flex;
     flex-wrap: wrap;
     width: 100%;
+    margin-top: 12px;
     padding-bottom: 7px;
+    color:white;
 }
 
 .check{
@@ -242,22 +235,18 @@ top: 0px;
         min-width: 280px;
     }
 
-    .user-input-box{
+    .input-box{
         margin-bottom: 12px;
         width: 100%;
     }
 
-    /* .user-input-box:nth-child(2n){
-        justify-content: space-between;
-    } */
 
-
-    .main-user-info{
+    .main-form-info{
         max-height: 380px;
         overflow: auto;
     }
 
-    .main-user-info::-webkit-scrollbar{
+    .main-form-info::-webkit-scrollbar{
         width: 0;
     }
 }
