@@ -20,6 +20,7 @@ def register(request):
         if form.is_valid():
             #save form in memoe=ry but not not in database becuase it will be saved only after the email has beeen verified
             user =form.save(commit=False)
+            #optional = form_2.save(commit = False)
             user.is_active=False
             user.save()
             #to get domain of current site
@@ -42,7 +43,8 @@ def register(request):
             return redirect('login')
     else:
         form = Createuserform()
-    return render(request, 'user/register.html', {'form': form})
+        #form_2 = Userform()
+    return render(request, 'user/register.html', {'form': form} )
 
 def activate(request,uidb64,token):
     User=get_user_model()
