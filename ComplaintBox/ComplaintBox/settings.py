@@ -137,14 +137,14 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#for images
-# Base url to serve media files
-MEDIA_URL = '/media/'
+
 
 # Path where media is stored
 import os
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
+#for images
+# Base url to serve media files
+MEDIA_URL = '/media/'
 #AUTH_USER_MODEL = "user.UserProfile"
 
 #AUTH_WORKER_MODEL = 'worker.WorkerProfile'

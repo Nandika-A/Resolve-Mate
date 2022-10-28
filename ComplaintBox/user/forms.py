@@ -9,10 +9,13 @@ from django.contrib.auth.models import User
 
 class Createuserform(UserCreationForm):
     class Meta:
-        model = UserProfile
+        model = User
         fields = [
-            'username','email', 'role', 'image', 'phone_no', 'address', 'preference', 'profession', 'biodata', 'password1'
+            'username','email','password1', 'password2'
         ]
+        # fields = [
+        #     'username','email', 'role', 'image', 'phone_no', 'address', 'preference', 'profession', 'biodata', 'password1', 'password2'
+        # ]
 
 '''
 created all the fields in one form along with optional ones
