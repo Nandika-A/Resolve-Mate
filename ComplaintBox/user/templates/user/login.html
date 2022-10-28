@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <head>
-    <title>Register</title>
+    <title>login</title>
 </head>
 <body>
 <div>
     <form method = "POST">
         {% csrf_token %}
-        {{ wform.as_p }}
+        {{ form.as_p }}
         <div>
             <button type = "submit">Sign Up</button>
         </div>
     </form>
     <div>
-        <small>Already have an account?</small>
-        <a href = "#">Sign In</a>
+        <small>Don't have an account?</small>
+        <a href = {% url 'register' %}>Sign Up</a>
     </div>
 </div>
 </body>

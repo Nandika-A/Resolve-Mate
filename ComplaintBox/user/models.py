@@ -29,24 +29,26 @@ class UserProfile(models.Model):
         WORKER = "WORKER", "Worker"
     
     user=models.OneToOneField(User,on_delete=models.CASCADE,null=True)
+    username = models.CharField(max_length = 200, default = None)
+    email = models.EmailField(max_length=200, help_text='Required')
     base_role = Role.USER
     role = models.CharField(max_length=50, choices = Role.choices)
     image=models.ImageField(default='default.jpg',upload_to='profile_pics')  #images will get saved in directory called profile_pics
-    Star: ArrayField(
+    Star= ArrayField(
         models.DecimalField(blank=True, validators=[
-            MaxValueValidator(5)]),
-        size=2,
+            MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
+        size=2,default = None
     )
-    #Address: models.TextField(default=None)
-    Phone_no: models.PositiveBigIntegerField(default=None)
-    #Preference: models.JSONField(null=True, default=dict)
+    
+    phone_no= models.PositiveBigIntegerField(default=None)
+    USERNAME_FIELD = 'user'
     def save(self, *args, **kwargs):
         if not self.pk:
             self.role = self.base_role
         return super().save(*args, **kwargs)
     def __str__(self):
-        return f'{self.user.username} Profile'  #will dispaly in a nice way otherwise will return object name
-    
+        return f'{self.username} Profile'  #will dispaly in a nice way otherwise will return object name
+'''    
 class Usermanager(models.Manager): #to separate user and worker data.
     def get_queryset(self, *args, **kwargs):
         results = super().get_queryset(*args, **kwargs)
@@ -63,12 +65,13 @@ class UserData(UserProfile):
         return super().save(*args, **kwargs)
     @property #to access additional fields in user model
     def more(self):
-        return self.Usermore
+        return Usermore.objects.filter(user_id=self.id)
     
 class Usermore(models.Model):
     user=models.OneToOneField(UserProfile,on_delete=models.CASCADE,null=True)
-    address : models.TextField(default = None)
-    preference: models.JSONField(null=True, default=dict)
+    address = models.TextField(default = None)
+    preference= models.JSONField(null=True, default=dict)
+    USERNAME_FIELD = 'user'
      
 class Workermanager(models.Manager):
     def get_queryset(self, *args, **kwargs):
@@ -86,9 +89,10 @@ class WorkerData(UserProfile):
         return super().save(*args, **kwargs)
     @property
     def more(self):
-        return self.Workermore
+        return Workermore.objects.filter(user_id=self.id)
     
 class Workermore(models.Model):
     user=models.OneToOneField(UserProfile,on_delete=models.CASCADE,null=True)
-    biodata : models.TextField(default = None)
-    profession : models.CharField(max_length=100)
+    biodata = models.TextField(default = None)
+    profession = models.CharField(max_length=100, default=None)
+    '''

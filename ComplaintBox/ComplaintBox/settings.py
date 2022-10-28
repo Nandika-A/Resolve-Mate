@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'worker',
     'home',
     'user',
     'django.contrib.postgres',
@@ -160,3 +159,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'basicuser338@gmail.com'
 EMAIL_HOST_PASSWORD = 'pcoifztaswpvfjnh'
 EMAIL_PORT = 587
+LOGIN_REDIRECT_URL = 'homepage'
