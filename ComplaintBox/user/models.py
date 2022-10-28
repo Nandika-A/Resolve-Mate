@@ -41,6 +41,10 @@ class UserProfile(models.Model):
     )
     
     phone_no= models.PositiveBigIntegerField(default=None)
+    address = models.TextField(default = None)
+    preference= models.JSONField(null=True, default=dict)
+    biodata = models.TextField(default = None)
+    profession = models.CharField(max_length=100, default=None)
     USERNAME_FIELD = 'user'
     def save(self, *args, **kwargs):
         if not self.pk:

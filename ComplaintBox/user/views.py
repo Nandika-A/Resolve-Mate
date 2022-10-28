@@ -60,4 +60,4 @@ def activate(request,uidb64,token):
 
 @login_required
 def profile(request) :
-    return render(request, 'users/profile.html')
+    return render(request, 'user/profile.html')

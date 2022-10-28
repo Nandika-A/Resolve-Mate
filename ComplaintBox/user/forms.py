@@ -26,4 +26,17 @@ class Createuserform(UserCreationForm):
         fields = [
             'username','email', 'role', 'image', 'phone_no', 'password1', 'password2'
         ]
+
+class Userform(UserCreationForm):
+    class Meta:
+        model = UserProfile
+        fields = [
+            'address', 'preference'
+        ]
     
+class Workerform(UserCreationForm):
+    class Meta:
+        model = UserProfile
+        fields = [
+                'profession', 'biodata'
+        ]
