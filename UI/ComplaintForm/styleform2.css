@@ -10,9 +10,9 @@ body{
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background: url("https://image.shutterstock.com/image-photo/persons-hand-inserting-complaint-letter-260nw-1289075314.jpg");
+    background: url("complaintpic.jpg");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 .container{
@@ -246,7 +246,5 @@ top: 0px;
         overflow: auto;
     }
 
-    .main-form-info::-webkit-scrollbar{
-        width: 0;
-    }
+    
 }

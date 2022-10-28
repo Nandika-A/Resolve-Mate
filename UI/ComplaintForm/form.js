@@ -1,8 +1,8 @@
 
     var obj = {
-        "Electrician":['Improper Electrical Wiring','Installing electrical apparatus','Repair and replace equipments'],
-        "Plumber" : ["Improper Drainage","Leakage issues","Repair water supply lines",],
-        "Carpenter": ["assa"]
+        "Electrician":['Improper Electrical Wiring','Installing electrical apparatus','Repair and replace equipments','Other'],
+        "Plumber" : ["Improper Drainage","Leakage issues","Repair water supply lines",'Other'],
+        "Carpenter": ["assa",'Other']
     }
     window.onload = function() {
   var wTypeSel = document.getElementById("wtype");
