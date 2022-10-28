@@ -32,7 +32,7 @@ class UserProfile(models.Model):
     username = models.CharField(max_length = 200, default = None)
     email = models.EmailField(max_length=200, help_text='Required')
     base_role = Role.USER
-    role = models.CharField(max_length=50, choices = Role.choices)
+    role = models.CharField(max_length=50, choices = Role.choices, default = Role.USER)
     image=models.ImageField(default='default.jpg',upload_to='profile_pics')  #images will get saved in directory called profile_pics
     Star= ArrayField(
         models.DecimalField(blank=True, validators=[
@@ -41,10 +41,10 @@ class UserProfile(models.Model):
     )
     
     phone_no= models.PositiveBigIntegerField(default=None)
-    address = models.TextField(default = None)
-    preference= models.JSONField(null=True, default=dict)
-    biodata = models.TextField(default = None)
-    profession = models.CharField(max_length=100, default=None)
+    address = models.TextField(default = None, blank=True)
+    preference= models.JSONField(null=True, default=dict, blank=True)
+    biodata = models.TextField(default = None, blank=True)
+    profession = models.CharField(max_length=100, default=None, blank=True)
     USERNAME_FIELD = 'user'
     def save(self, *args, **kwargs):
         if not self.pk:
