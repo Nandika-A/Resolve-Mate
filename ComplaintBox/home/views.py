@@ -10,12 +10,12 @@ def homepage(request):
     }
     if profiles.count==0:
         return render(request, "home/home.html")
-    return render(request, "home/tasks.html", context)
-    """ender(request, "home/home.html", context)
+    return render(request, "home/home.html", context)
 """
 def complaintform(request):
     context = {}
     if request.method == "POST":
         TaskHistory.profession = request.POST.get('')
-    return r
+    return render(request, "home/tasks.html", context)
+    """
     
