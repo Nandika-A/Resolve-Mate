@@ -1,6 +1,17 @@
-<form method="POST">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    <button type="submit">Submit</button>
-</form>
+<!DOCTYPE html>
+<head>
+    <title>Edit Profile</title>
+</head>
+<body>
+<div>
+    <form method = "POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <div>
+            <button type = "submit">Submit</button>
+        </div>
+    </form>
+    
+</div>
+</body>

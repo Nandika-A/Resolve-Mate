@@ -56,7 +56,7 @@ def activate(request,uidb64,token):
         user.is_active = True #mean user can login
         user.save()
         messages.success(request, f'your account has been created you can now login!')
-        return redirect('edit_profile')
+        return render(request, 'user/edit_profile.html')
     else:
         return HttpResponse('Activation link is invalid!')
 
