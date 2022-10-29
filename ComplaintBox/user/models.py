@@ -34,13 +34,19 @@ class UserProfile(models.Model):
     base_role = Role.USER
     role = models.CharField(max_length=50, choices = Role.choices)
     image=models.ImageField(default='default.jpg',upload_to='profile_pics')  #images will get saved in directory called profile_pics
-    Star= ArrayField(
+    '''
+    Star= models.JSONField(
         models.DecimalField(blank=True, validators=[
             MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
-        size=2,default = None
+        default = []
     )
+<<<<<<< HEAD
+    '''
+    phone_no= models.PositiveBigIntegerField(default=None)
+=======
     
     phone_no= models.CharField(default=None,max_length=50)
+>>>>>>> 36563504d42540829b90765a74b1798761fce55f
     address = models.TextField(default = None)
     preference= ArrayField(
         models.DecimalField(blank=True, validators=[

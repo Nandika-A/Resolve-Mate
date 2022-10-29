@@ -5,12 +5,16 @@
     </title>
 </head>
 <body>
+    <form method="GET">
+        {{ wfilter.form }}
+        <button type = "submit">Apply</button>
+    </form>
     <ul>
         <!-- add if clause if no profiles are fetched -->
     {% for profile in profiles %}
             <li>{{ profile.username }}</li>
             <li>{{ profile.image }}</li>
-            <li>{{ profile.Star__0 }}</li>
+            
             <li>{{ profile.biodata }}</li>
             <li>{{ profile.profession }}</li>
     {% endfor %}

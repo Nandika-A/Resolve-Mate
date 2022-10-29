@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'home',
     'user',
+    'django_filters',
     'django.contrib.postgres',
     'django.contrib.admin',
     'django.contrib.auth',
