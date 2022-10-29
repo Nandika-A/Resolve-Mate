@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        Home
+    </title>
+</head>
+<body>
+    <ul>
+    {% for profile in profiles %}
+            <li>{{ profile.username }}</li>
+            <li>{{ profile.image }}</li>
+            <li>{{ profile.Star__0 }}</li>
+            <li>{{ profile.biodata }}</li>
+            <li>{{ profile.profession }}</li>
+    {% endfor %}
+    </ul>
+</body>
