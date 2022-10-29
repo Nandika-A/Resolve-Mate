@@ -1,7 +1,7 @@
 
 from django.contrib.auth.models import User
 
-
+from django.contrib.postgres.fields import JSONField
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
@@ -40,10 +40,20 @@ class UserProfile(models.Model):
             MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
         default = []
     )
+<<<<<<< HEAD
     '''
     phone_no= models.PositiveBigIntegerField(default=None)
+=======
+    
+    phone_no= models.CharField(default=None,max_length=50)
+>>>>>>> 36563504d42540829b90765a74b1798761fce55f
     address = models.TextField(default = None)
-    preference= models.JSONField(null=True, default=dict)
+    preference= ArrayField(
+        models.DecimalField(blank=True, validators=[
+            MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
+        size=2,default = None
+    )
+    
     biodata = models.TextField(default = None)
     profession = models.CharField(max_length=100, default=None)
     USERNAME_FIELD = 'user'

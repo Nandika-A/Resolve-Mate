@@ -10,6 +10,7 @@
         <button type = "submit">Apply</button>
     </form>
     <ul>
+        <!-- add if clause if no profiles are fetched -->
     {% for profile in profiles %}
             <li>{{ profile.username }}</li>
             <li>{{ profile.image }}</li>
