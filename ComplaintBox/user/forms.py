@@ -13,8 +13,14 @@ class Createuserform(UserCreationForm):
         fields = [
             'username','email','password1', 'password2'
         ]
+class AddDetails(UserCreationForm):
+    class Meta:
+        model = UserProfile
+        fields = [
+            'role', 'image', 'phone_no', 'address', 'preference', 'profession', 'biodata', 'password1',
+        ]
         # fields = [
-        #     'username','email', 'role', 'image', 'phone_no', 'address', 'preference', 'profession', 'biodata', 'password1', 'password2'
+        #     'username','email',  'password2'
         # ]
 
 '''

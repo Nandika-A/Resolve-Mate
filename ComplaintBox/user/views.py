@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import login_required
-from .forms import Createuserform
+from .forms import Createuserform, AddDetails
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
@@ -36,6 +36,7 @@ def register(request):
                 mail_subject, message, to=[to_email]
             )
             email.send()
+            
             return HttpResponse('Please confirm your email address to complete registration')
             username = form.cleaned_data.get('username')
             messages.success(request, f'your account has been created you can now login using {username}!')
@@ -54,10 +55,28 @@ def activate(request,uidb64,token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True #mean user can login
         user.save()
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        messages.success(request, f'your account has been created you can now login!')
+        return redirect('edit_profile')
     else:
         return HttpResponse('Activation link is invalid!')
 
 @login_required
 def profile(request) :
     return render(request, 'user/profile.html')
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = AddDetails(request.POST)
+        if form.is_valid():
+            user =form.save
+            user.is_active=False
+            user.save()
+            #to get domain of current site
+            
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'your details has been added you can now use our website, {username}!')
+            return redirect('')
+    else:
+        form = AddDetails()
+    return render(request, 'user/edit_profile.html', {'form': form})
