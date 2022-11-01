@@ -35,7 +35,7 @@ class UserProfile(models.Model):
     base_role = Role.USER
     role = models.CharField(max_length=50, choices = Role.choices)
     image=models.ImageField(default='default.jpg',upload_to='profile_pics')  #images will get saved in directory called profile_pics
-    '''
+    
     Star= models.JSONField(
         models.DecimalField(blank=True, validators=[
             MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
@@ -118,4 +118,4 @@ class Workermore(models.Model):
     user=models.OneToOneField(UserProfile,on_delete=models.CASCADE,null=True)
     biodata = models.TextField(default = None)
     profession = models.CharField(max_length=100, default=None)
-    
+   ''' 
