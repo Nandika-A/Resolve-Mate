@@ -40,13 +40,8 @@ class UserProfile(models.Model):
             MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
         default = []
     )
-<<<<<<< HEAD
-    '''
-    phone_no= models.PositiveBigIntegerField(default=None)
-=======
     
     phone_no= models.CharField(default=None,max_length=50)
->>>>>>> 36563504d42540829b90765a74b1798761fce55f
     address = models.TextField(default = None)
     preference= ArrayField(
         models.DecimalField(blank=True, validators=[
@@ -110,4 +105,4 @@ class Workermore(models.Model):
     user=models.OneToOneField(UserProfile,on_delete=models.CASCADE,null=True)
     biodata = models.TextField(default = None)
     profession = models.CharField(max_length=100, default=None)
-    '''
+    

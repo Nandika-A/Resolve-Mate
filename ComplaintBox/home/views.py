@@ -28,15 +28,34 @@ class ProfileDetailView(FormMixin, DetailView):
         if request.method == "POST":
             TaskHistory.profession = object.profession
             TaskHistory.complaint = request.POST.get('complaint')
+            #TaskHistory.assignedby = 
+            #TaskHistory.assigned = 
             TaskHistory.save()
             
 def complaintform(request):
     context = {}
     if request.method == "POST":
+        #TaskHistory.assignedby =
+        #TaskHistory.date_posted =  
         TaskHistory.profession = request.POST.get('wtype')
         TaskHistory.complaint = request.POST.get('complaint')
+        TaskHistory.status = 'ONGOING'
         TaskHistory.save()
     return render(request, "home/tasks.html", context)
+
+def adminpage(request):
+    tasks = TaskHistory.objects.order_by('date_posted').filter(status = 'PENDING')
+    pref = UserProfile.objects.filter(username = tasks.assignedby).get('preference')
+    context = {
+        'tasks' : tasks,
+        'pref' : pref
+    }
+    if request.method == 'POST':
+        TaskHistory.assigned = request.POST.get('worker')
+        TaskHistory.status = 'ONGOING'
+        TaskHistory.save()
+    return render(request, "home/adminpage.html", context)
+        
 
   
     
