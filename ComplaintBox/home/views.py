@@ -1,11 +1,20 @@
 from django.shortcuts import render, HttpResponse
+import logging
 from .models import TaskHistory
 from user.models import UserProfile
 from django.views.generic.edit import FormMixin
 from django.views.generic import DetailView
 
+def homepage(request):
+    profiles = UserProfile.objects.filter(role = 'WORKER').order_by('Star__0')
+    wfilter = UserProfileFilter(request.GET, queryset = profiles)
+    logging.info("*******",wfilter, profiles)
+    profiles = wfilter.qs
+    logging.info("*******",wfilter, profiles)
+    print(profiles)
+    print(wfilter)
 # Create your views here.
-
+'''
 def homepage(request):
     profiles = UserProfile.objects.filter(role = 'WORKER').order_by('Star__0')[:10]
     context = {
@@ -14,13 +23,21 @@ def homepage(request):
         "count" : profiles.count
     }
     if profiles.count==0:
-        #return render(request, "home/home.html")
-        context = {
-            "count" : 0
-        }
+        return render(request, "home/home.html")
+
+    return render(request, "home/home.html", context)    
+    
+'''
+def complaintform(request):
+    context = {}
+    if request.method == "POST":
+        taskHistory = TaskHistory()
+        taskHistory.profession = request.POST.get('wtype')
+        taskHistory.complaint = request.POST.get('complaint')
+        taskHistory.save()
     return render(request, "home/tasks.html", context)
-    """ender(request, "home/home.html", context)
-"""
+
+    
 class ProfileDetailView(FormMixin, DetailView):
     model = UserProfile
     def detailedprofile(request):

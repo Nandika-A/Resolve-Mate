@@ -1,4 +1,5 @@
 
+from email.policy import default
 from django.contrib.auth.models import User
 
 from django.contrib.postgres.fields import JSONField
@@ -42,6 +43,14 @@ class UserProfile(models.Model):
     )
     
     phone_no= models.CharField(default=None,max_length=50)
+    
+    Star= models.JSONField(default=dict)
+
+    
+    
+    
+    phone_no= models.CharField(default=None,max_length=50)
+
     address = models.TextField(default = None)
     preference= ArrayField(
         models.DecimalField(blank=True, validators=[
@@ -58,6 +67,11 @@ class UserProfile(models.Model):
         return super().save(*args, **kwargs)
     def __str__(self):
         return f'{self.username} Profile'  #will dispaly in a nice way otherwise will return object name
+class WorkerProfile(models.Model):
+    workername=models.ForeignKey(UserProfile,on_delete=models.CASCADE)  
+    profession = models.CharField(max_length=100, default=None)
+    biodata = models.TextField(default = None)
+    Star= models.JSONField(default=dict)
 '''    
 class Usermanager(models.Manager): #to separate user and worker data.
     def get_queryset(self, *args, **kwargs):
