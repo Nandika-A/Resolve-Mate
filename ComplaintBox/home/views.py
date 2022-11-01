@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-
+import logging
 from .models import TaskHistory
 from user.models import UserProfile
 from .filters import UserProfileFilter
@@ -8,13 +8,20 @@ from .filters import UserProfileFilter
 def homepage(request):
     profiles = UserProfile.objects.filter(role = 'WORKER').order_by('Star__0')
     wfilter = UserProfileFilter(request.GET, queryset = profiles)
+    logging.info("*******",wfilter, profiles)
     profiles = wfilter.qs
-
+    logging.info("*******",wfilter, profiles)
+    print(profiles)
+    print(wfilter)
     context = {
         "profiles" : profiles,
         "wfilter" : wfilter
     }
-    return render(request, "home/home.html", context)
+    if profiles.count==0:
+        return render(request, "home/home.html")
+
+    return render(request, "home/home.html", context)    
+    
 
 def complaintform(request):
     context = {}
@@ -25,9 +32,7 @@ def complaintform(request):
         taskHistory.save()
     return render(request, "home/tasks.html", context)
 
-    if profiles.count==0:
-        return render(request, "home/home.html")
-    return render(request, "home/home.html", context)
+    
 """
 def complaintform(request):
     context = {}

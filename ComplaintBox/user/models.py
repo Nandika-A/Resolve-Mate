@@ -1,4 +1,5 @@
 
+from email.policy import default
 from django.contrib.auth.models import User
 
 from django.contrib.postgres.fields import JSONField
@@ -34,19 +35,14 @@ class UserProfile(models.Model):
     base_role = Role.USER
     role = models.CharField(max_length=50, choices = Role.choices)
     image=models.ImageField(default='default.jpg',upload_to='profile_pics')  #images will get saved in directory called profile_pics
-    '''
-    Star= models.JSONField(
-        models.DecimalField(blank=True, validators=[
-            MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
-        default = []
-    )
-<<<<<<< HEAD
-    '''
-    phone_no= models.PositiveBigIntegerField(default=None)
-=======
+    
+    Star= models.JSONField(default=dict)
+
+    
+    
     
     phone_no= models.CharField(default=None,max_length=50)
->>>>>>> 36563504d42540829b90765a74b1798761fce55f
+
     address = models.TextField(default = None)
     preference= ArrayField(
         models.DecimalField(blank=True, validators=[
@@ -63,6 +59,11 @@ class UserProfile(models.Model):
         return super().save(*args, **kwargs)
     def __str__(self):
         return f'{self.username} Profile'  #will dispaly in a nice way otherwise will return object name
+class WorkerProfile(models.Model):
+    workername=models.ForeignKey(UserProfile,on_delete=models.CASCADE)  
+    profession = models.CharField(max_length=100, default=None)
+    biodata = models.TextField(default = None)
+    Star= models.JSONField(default=dict)
 '''    
 class Usermanager(models.Manager): #to separate user and worker data.
     def get_queryset(self, *args, **kwargs):
