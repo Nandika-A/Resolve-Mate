@@ -11,9 +11,6 @@
     </form>
     <ul>
         <!-- add if clause if no profiles are fetched -->
-<<<<<<< HEAD
-    
-=======
     {% if {{ count }} > 0%}
     {% for profile in profiles %}
             <li><a href = "{% url 'profile-detail' profile.id %}" >{{ profile.username }}</a></li>
@@ -22,6 +19,5 @@
             <li>{{ profile.biodata }}</li>
             <li>{{ profile.profession }}</li>
     {% endfor %}
->>>>>>> 41d43cc942cc5010f9a8bdf4d4ab357d43073c43
     </ul>
 </body>
