@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+    <title>Admin page</title>
+</head>
+<body>
+   <table>
+    <tr>
+        <td>Complaint</td>
+        <td>Assigned by</td>
+        <td>Preferences(if any)</td>
+        <td>Worker assigned</td>
+    </tr>
+    {% for task in {{ tasks }} %}
+    <tr>
+        <td>{{ task.complaint }}</td>
+        <td>{{ task.assignedby }}</td>
+        {% if {{ task.pref }} %}
+        <td>{{ task.pref }}</td>
+        {% else %}
+        <td>---</td>
+        {% endif %}
+        <td>
+            <form action = '.' method = "POST">
+                {% csrf_token %}
+                <input type = "text" name = "worker"/>
+                <input type = "submit" value = "Save" />
+            </form>
+        </td>
+    </tr>
+   </table>
+</body>
