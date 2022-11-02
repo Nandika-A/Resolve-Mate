@@ -57,9 +57,7 @@ class UserProfile(models.Model):
             MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
         size=2,default = None
     )
-    
-    biodata = models.TextField(default = None)
-    profession = models.CharField(max_length=100, default=None)
+
     USERNAME_FIELD = 'user'
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -72,6 +70,7 @@ class WorkerProfile(models.Model):
     profession = models.CharField(max_length=100, default=None)
     biodata = models.TextField(default = None)
     Star= models.JSONField(default=dict)
+    
 '''    
 class Usermanager(models.Manager): #to separate user and worker data.
     def get_queryset(self, *args, **kwargs):

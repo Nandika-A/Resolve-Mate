@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import login_required
-from .forms import Createuserform, AddDetails
+from .forms import Createuserform, AddDetails, AddWorkerDetails
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
@@ -56,7 +56,7 @@ def activate(request,uidb64,token):
         user.is_active = True #mean user can login
         user.save()
         messages.success(request, f'your account has been created you can now login!')
-        return render(request, 'user/edit_profile.html')
+        return redirect('login')
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -65,7 +65,7 @@ def profile(request) :
     return render(request, 'user/profile.html')
 
 @login_required
-def edit_profile(request):
+def  edit_profile(request):
     if request.method == 'POST':
         form = AddDetails(request.POST)
         if form.is_valid():
@@ -75,8 +75,14 @@ def edit_profile(request):
             #to get domain of current site
             
             username = form.cleaned_data.get('username')
-            messages.success(request, f'your details has been added you can now use our website, {username}!')
-            return redirect('')
+            form1=AddWorkerDetails(request.POST)
+            if form1.is_valid():
+                user =form1.save
+                user.is_active=False
+                user.save()
+                messages.success(request, f'your details has been added you can now use our website, {username}!')
+                return redirect('')
     else:
         form = AddDetails()
+        form1=AddWorkerDetails()
     return render(request, 'user/edit_profile.html', {'form': form})
