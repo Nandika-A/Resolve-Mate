@@ -118,4 +118,4 @@ class Workermore(models.Model):
     user=models.OneToOneField(UserProfile,on_delete=models.CASCADE,null=True)
     biodata = models.TextField(default = None)
     profession = models.CharField(max_length=100, default=None)
-   ''' 
+'''
