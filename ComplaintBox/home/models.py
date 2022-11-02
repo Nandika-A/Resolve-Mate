@@ -20,3 +20,11 @@ class TaskHistory(models.Model):
          models.TextField(blank=True,default = None))
      def __str__(self):
          return self.title4es
+class Comment(models.Model):
+	complaint=models.ForeignKey(TaskHistory,on_delete=models.CASCADE,related_name='comments')
+	user=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
+	content=models.TextField()
+	timestamp=models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return 'comment on {} by {}'.format(self.post.title,self.user.username)

@@ -1,7 +1,8 @@
 from django.shortcuts import render, HttpResponse
 import logging
 from django.shortcuts import redirect
-
+from .forms import CommentForm
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from asyncio import taskgroups
 from .models import TaskHistory
 from user.models import UserProfile
@@ -9,6 +10,13 @@ from django.views.generic.edit import FormMixin
 from django.views.generic import DetailView
 from .forms import CommentForm
 from .models import Comment , TaskHistory 
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView
+)
 def homepage(request):
     profiles = UserProfile.objects.filter(role = 'WORKER').order_by('Star__0')
     wfilter = UserProfile.objects.filter(request.GET, queryset = profiles)
@@ -76,10 +84,9 @@ def adminpage(request):
         TaskHistory.save()
     return render(request, "home/adminpage.html", context)
         
-def complaint_detailview(request,id):
-    from .forms import CommentForm
+
  
-def post_detailview(request, id):
+def complaint_detailview(request, id):
    
  if request.method == 'POST':
     cf = CommentForm(request.POST or None)
@@ -97,3 +104,27 @@ def post_detailview(request, id):
     return render(request, 'home / complaint_detail.html', context)
   
     
+class ComplaintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = TaskHistory
+    fields = ['complaint','title']
+    success_url = ''
+
+    def form_valid(self, form):
+        form.instance.assignedby = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        complaint = self.get_object()
+        if self.request.user == complaint.assignedby:
+            return True
+        return False
+
+class DeleteComplaintView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = TaskHistory
+    success_url = ''
+
+    def test_func(self):
+        complaint = self.get_object()
+        if self.request.user == complaint.author:
+            return True
+        return False
