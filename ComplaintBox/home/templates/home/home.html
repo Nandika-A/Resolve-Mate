@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        Home
+    </title>
+</head>
+<body>
+    <form method="GET">
+        {{ wfilter.form }}
+        <button type = "submit">Apply</button>
+    </form>
+    <ul>
+        <!-- add if clause if no profiles are fetched -->
+    {% if {{ count }} > 0%}
+    {% for profile in profiles %}
+            <li><a href = "{% url 'profile-detail' profile.id %}" >{{ profile.username }}</a></li>
+            <li>{{ profile.image }}</li>
+            <li>{{ profile.Star__0 }}</li>
+            <li>{{ profile.biodata }}</li>
+            <li>{{ profile.profession }}</li>
+    {% endfor %}
+    </ul>
+</body>

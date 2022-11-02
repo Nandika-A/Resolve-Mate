@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        Profile
+    </title>
+</head>
+<body>
+
+    <div class="content-section">
+        <div class=" media ">
+
+        
+            <img class="rounded-circle account-img" src="{{user.profile.image.url}}">
+            <div class="media-body">
+                <h2>Username : {{ user.username }}</h1>
+                <h3>Email : {{ user.email }}</h3>
+                <h3>Phone Number : {{ user.phone_no }}</h3>
+                {% if user.address is Null %}
+                    <h3>Profession : {{ user.profession }}</h3>
+                    <h3>Biodata : {{ user.biodata }}</h3>
+                {% else %}
+                    <h3>Address : {{ user.address }} </h3>
+                {% endif %}    
+            </div>
+        </div>    
+    </div>
+</body>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+    <title>Edit Profile</title>
+</head>
+<body>
+<div>
+    <form method = "POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <div>
+            <button type = "submit">Submit</button>
+        </div>
+    </form>
+    <form method = "POST">
+        {% csrf_token %}
+        {{ form1.as_p }}
+        
+        <div>
+            <button type = "submit">Submit</button>
+        </div>
+    </form>
+    
+</div>
+</body>

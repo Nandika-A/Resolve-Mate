@@ -1,24 +1,32 @@
 from django import forms 
 from django.contrib.auth.forms import UserCreationForm
-from .models import UserProfile
+from .models import UserProfile, WorkerProfile
+from django.contrib.auth.models import User
+
 
 #django form for user registration:
-class UserRegistrationForm(UserCreationForm):
-    #additional fields to be included in inbuilt user registration form in addition to username and password
-    
-    Name = forms.CharField()
-    Email = forms.EmailField()
-    Address = forms.CharField(widget=forms.Textarea)
-    Phone_no = forms.IntegerField()
-    
+
+
+class Createuserform(UserCreationForm):
     class Meta:
-        model = UserProfile #form is saved in userprofile model
-        '''
-        widgets = {
-            'Password' : forms.PasswordInput()
-        }
-        '''
-        # the order in which the fields in the form are to be displayed:
+        model = User
         fields = [
-            'Name', 'Phone_no', 'Email', 'Address', 'password1', 'password2'
+            'username','email','password1', 'password2'
         ]
+class AddDetails(UserCreationForm):
+    class Meta:
+        model = UserProfile
+        fields = [
+            'image', 'phone_no', 'address',
+        ]
+class AddWorkerDetails(UserCreationForm):
+    class Meta:
+        model=WorkerProfile
+        fields=[
+            'profession', 'biodata',
+        ]
+
+'''
+created all the fields in one form along with optional ones
+will hide them using html
+'''
