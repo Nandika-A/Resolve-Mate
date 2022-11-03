@@ -3,9 +3,9 @@ import logging
 from django.shortcuts import redirect
 from .forms import CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from asyncio import taskgroups
+#from asyncio import taskgroups
 from .models import TaskHistory
-from user.models import UserProfile
+from user.models import UserProfile, WorkerProfile
 from django.views.generic.edit import FormMixin
 from django.views.generic import DetailView
 from .forms import CommentForm
@@ -19,15 +19,12 @@ from django.views.generic import (
 )
 def homepage(request):
     profiles = UserProfile.objects.filter(role = 'WORKER').order_by('Star__0')
+'''
     wfilter = UserProfile.objects.filter(request.GET, queryset = profiles)
     logging.info("*******",wfilter, profiles)
-    wfilter = UserProfile.Filter(request.GET, queryset = profiles)
+    #wfilter = UserProfile.Filter(request.GET, queryset = profiles)
     profiles = wfilter.qs
-    
-# Create your views here.
-'''
-def homepage(request):
-    profiles = UserProfile.objects.filter(role = 'WORKER').order_by('Star__0')[:10]
+  '''  
     context = {
         "profiles" : profiles,
         "count" : profiles.count
@@ -37,7 +34,7 @@ def homepage(request):
 
     return render(request, "home/home.html", context)    
     
-'''
+
 def complaintform(request):
     context = {}
     if request.method == "POST":
