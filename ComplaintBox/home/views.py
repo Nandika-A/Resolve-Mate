@@ -54,7 +54,7 @@ class ProfileDetailView(FormMixin, DetailView):
             TaskHistory.profession = object.profession
             TaskHistory.complaint = request.POST.get('complaint')
             #TaskHistory.assignedby = 
-            #TaskHistory.assigned = 
+            #TaskHistory.assigned = object.user
             TaskHistory.save()
             
 # def complaintform(request):

@@ -39,12 +39,12 @@ class UserProfile(models.Model):
     Star= models.JSONField(
         models.DecimalField(blank=True, validators=[
             MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
-        default = []
+        default = [], blank = True
     )
     
     phone_no= models.CharField(default=None,max_length=50)
     
-    Star= models.JSONField(default=dict)
+    preference= models.JSONField(default=dict, blank=True)
 
     
     
@@ -52,11 +52,13 @@ class UserProfile(models.Model):
     phone_no= models.CharField(default=None,max_length=50)
 
     address = models.TextField(default = None)
-    preference= ArrayField(
+    '''
+    Star= ArrayField(
         models.DecimalField(blank=True, validators=[
             MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
         size=2,default = None
     )
+    '''
 
     USERNAME_FIELD = 'user'
     def save(self, *args, **kwargs):
@@ -64,12 +66,12 @@ class UserProfile(models.Model):
             self.role = self.base_role
         return super().save(*args, **kwargs)
     def __str__(self):
-        return f'{self.username} Profile'  #will dispaly in a nice way otherwise will return object name
+        return f'{self.user.username} Profile'  #will dispaly in a nice way otherwise will return object name
 class WorkerProfile(models.Model):
     workername=models.ForeignKey(UserProfile,on_delete=models.CASCADE)  
     profession = models.CharField(max_length=100, default=None)
     biodata = models.TextField(default = None)
-    Star= models.JSONField(default=dict)
+    Star= models.JSONField(default=dict, blank=True)
     
 '''    
 class Usermanager(models.Manager): #to separate user and worker data.
