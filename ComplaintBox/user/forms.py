@@ -14,12 +14,26 @@ class Createuserform(UserCreationForm):
             'username','email','password1', 'password2'
         ]
 class AddDetails(UserCreationForm):
+    phone_no = forms.CharField(max_length=100,
+                               required=True,
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+    address = forms.EmailField(required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+    image=forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+
     class Meta:
         model = UserProfile
         fields = [
             'image', 'phone_no', 'address',
         ]
+        
 class AddWorkerDetails(UserCreationForm):
+    profession = forms.CharField(max_length=100,
+                               required=True,
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+    biodata = forms.EmailField(required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+    
     class Meta:
         model=WorkerProfile
         fields=[
