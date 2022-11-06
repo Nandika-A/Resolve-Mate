@@ -71,7 +71,8 @@ class WorkerProfile(models.Model):
     workername=models.ForeignKey(UserProfile,on_delete=models.CASCADE)  
     profession = models.CharField(max_length=100, default=None)
     biodata = models.TextField(default = None)
-    Star= models.JSONField(default=dict, blank=True)
+    no_of_jobs = models.IntegerField(default = 0)
+    Star= models.JSONField(default=list, blank=True)
     
 '''    
 class Usermanager(models.Manager): #to separate user and worker data.

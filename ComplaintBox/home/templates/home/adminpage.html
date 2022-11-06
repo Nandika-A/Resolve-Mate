@@ -10,12 +10,12 @@
         <td>Preferences(if any)</td>
         <td>Worker assigned</td>
     </tr>
-    {% for task in {{ tasks }} %}
+    {% for task in tasks %}
     <tr>
         <td>{{ task.complaint }}</td>
         <td>{{ task.assignedby }}</td>
-        {% if {{ task.pref }} %}
-        <td>{{ task.pref }}</td>
+        {% if {{ pref }} %}
+        <td>{{ pref }}</td>
         {% else %}
         <td>---</td>
         {% endif %}
@@ -23,6 +23,14 @@
             <form action = '.' method = "POST">
                 {% csrf_token %}
                 <input type = "text" name = "worker"/>
+                    <ul>
+                        {% for w in worker %}
+                        <li>Name : {{ w.workername_id }}</li>
+                        <li>Number of jobs assigned currently : {{ w.no_of_jobs }}</li>
+                        <li>Star rating : {{ w.Star__0 }}</li>
+                        <br>
+                        <br>
+                    </ul>
                 <input type = "submit" value = "Save" />
             </form>
         </td>

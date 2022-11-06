@@ -41,20 +41,23 @@ def complaintform(request):
         taskHistory = TaskHistory()
         taskHistory.profession = request.POST.get('wtype')
         taskHistory.complaint = request.POST.get('complaint')
+        taskhistory.assigned_by = request.user.username
         taskHistory.save()
 
     return render(request, "home/tasks.html", context)
 
     
 class ProfileDetailView(FormMixin, DetailView):
-    model = UserProfile
+    model = WorkerProfile
     def detailedprofile(request):
         context = {}
         if request.method == "POST":
             TaskHistory.profession = object.profession
             TaskHistory.complaint = request.POST.get('complaint')
-            #TaskHistory.assignedby = 
-            #TaskHistory.assigned = object.user
+            TaskHistory.assignedby = request.user.username
+            TaskHistory.assigned = object.workername
+            TaskHistory.status = 'ONGOING'
+            WorkerProfile.no_of_jobs += 1
             TaskHistory.save()
             
 # def complaintform(request):
@@ -71,9 +74,11 @@ class ProfileDetailView(FormMixin, DetailView):
 def adminpage(request):
     tasks = TaskHistory.objects.order_by('date_posted').filter(status = 'PENDING')
     pref = UserProfile.objects.filter(username = tasks.assignedby).get('preference')
+    worker = WorkerProfile.objects.filter(profession = tasks.profession).order_by('no_of_jobs')
     context = {
         'tasks' : tasks,
-        'pref' : pref
+        'pref' : pref,
+        'worker' : worker
     }
     if request.method == 'POST':
         TaskHistory.assigned = request.POST.get('worker')
@@ -125,3 +130,15 @@ class DeleteComplaintView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == complaint.author:
             return True
         return False
+    
+def displayhistory(request):
+    tasks = TaskHistory.objects.get(assignedby_id = 'request.user.id')
+    context = {
+        'tasks' : tasks
+    }
+    if request.method == 'POST':
+        Comments = request.POST.get('comment')
+    return render(request, 'home/displayhistory.html', context)
+    
+    
+    

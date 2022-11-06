@@ -11,7 +11,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name = 'user/logout.html'), name = 'logout'),
     path('profile/', user_views.profile, name= 'profile'),
     path("password_reset", auth_views.password_reset_request, name="password_reset"),#**check if it is user or auth
-    path('edit_profile/', user_views.edit_profile, name= 'edit_profile'),
+    path('edit_profile/', user_views.edit_profile, name= 'edit-profile'),
     path ('',include('home.urls')),
 ]
 #image

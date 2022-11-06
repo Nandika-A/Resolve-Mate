@@ -18,8 +18,11 @@ class TaskHistory(models.Model):
      status=models.CharField(default = "PENDING", max_length = 50)
      Comments=ArrayField(
          models.TextField(blank=True,default = None))
+     
+     #Comments = models.TextField(blank=True,default = None)
      def __str__(self):
-         return self.title4es
+         #return self.title4es
+         return self.title
 class Comment(models.Model):
 	complaint=models.ForeignKey(TaskHistory,on_delete=models.CASCADE,related_name='comments')
 	user=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
