@@ -71,13 +71,27 @@ def activate(request,uidb64,token):
     else:
         return HttpResponse('Activation link is invalid!')
 
+# @login_required
+# def profile(request) :
+#     return render(request, 'user/profile.html')
+
 @login_required
-def profile(request) :
-    userp = UserProfile.objects.all()
-    context = {
-        'userp' : userp
-    }
-    return render(request, 'user/profile.html', context)
+def profile(request):
+    if request.method == 'POST':
+        user_form = AddDetails(request.POST, instance=request.user)
+        profile_form = AddWorkerDetails(request.POST, request.FILES, instance=request.user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='profile')
+    else:
+        user_form = AddDetails(instance=request.user)
+        profile_form = AddWorkerDetails(instance=request.user.profile)
+
+    return render(request, 'users/profile.html', {'user_form': user_form, 'profile_form': profile_form})
+
 
 @login_required
 def  edit_profile(request):
