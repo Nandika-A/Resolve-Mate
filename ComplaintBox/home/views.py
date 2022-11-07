@@ -9,7 +9,8 @@ from user.models import UserProfile, WorkerProfile
 from django.views.generic.edit import FormMixin
 from django.views.generic import DetailView
 from .forms import CommentForm
-from .models import Comment , TaskHistory 
+from .models import Comment, TaskHistory 
+#from .filters import UserProfileFilter
 from django.views.generic import (
     ListView,
     DetailView,
@@ -18,16 +19,28 @@ from django.views.generic import (
     DeleteView
 )
 def homepage(request):
-    profiles = UserProfile.objects.filter(role = 'WORKER').order_by('Star__0')
     '''
-    wfilter = UserProfile.objects.filter(request.GET, queryset = profiles)
+    profiles = UserProfile.objects.filter(role = 'WORKER').order_by('Star__0')
+    pf = profiles.worker_profile_set.all()
+    wfilter = UserProfileFilter(request.GET, queryset=pf)
     logging.info("*******",wfilter, profiles)
-    #wfilter = UserProfile.Filter(request.GET, queryset = profiles)
-    profiles = wfilter.qs
-    '''  
+    wfilter = UserProfileFilter(request.GET, queryset = profiles)
+    pf = wfilter.qs  
     context = {
         "profiles" : profiles,
+        #"pf" : pf,
         "count" : profiles.count
+    }
+    '''
+    professionfilter = WorkerProfile.objects.values_list('profession')
+    if request.method == "GET":
+        p = request.GET.get('w')
+        profiles = WorkerProfile.objects.filter(profession = p).order_by('Star')
+    else:
+        profiles =  WorkerProfile.objects.order_by('Star')
+    context = {
+        'professionfilter' : professionfilter,
+        'profiles' : profiles
     }
     if profiles.count==0:
         return render(request, "home/home.html")
@@ -60,26 +73,16 @@ class ProfileDetailView(FormMixin, DetailView):
             WorkerProfile.no_of_jobs += 1
             TaskHistory.save()
             
-# def complaintform(request):
-#     context = {}
-#     if request.method == "POST":
-#         #TaskHistory.assignedby =
-#         #TaskHistory.date_posted =  
-#         TaskHistory.profession = request.POST.get('wtype')
-#         TaskHistory.complaint = request.POST.get('complaint')
-#         TaskHistory.status = 'ONGOING'
-#         TaskHistory.save()
-#     return render(request, "home/tasks.html", context)
-
 def adminpage(request):
     tasks = TaskHistory.objects.order_by('date_posted').filter(status = 'PENDING')
-    pref = UserProfile.objects.filter(username = tasks.assignedby).get('preference')
+    pref = UserProfile.objects.filter(user_id = TaskHistory.assignedby.id).get('preference')
     worker = WorkerProfile.objects.filter(profession = tasks.profession).order_by('no_of_jobs')
     context = {
         'tasks' : tasks,
         'pref' : pref,
         'worker' : worker
     }
+    
     if request.method == 'POST':
         TaskHistory.assigned = request.POST.get('worker')
         TaskHistory.status = 'ONGOING'
@@ -132,12 +135,10 @@ class DeleteComplaintView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
     
 def displayhistory(request):
-    tasks = TaskHistory.objects.get(assignedby_id = 'request.user.id')
+    tasks = TaskHistory.objects.filter(assignedby_id = request.user.id)
     context = {
         'tasks' : tasks
-    }
-    if request.method == 'POST':
-        Comments = request.POST.get('comment')
+    }      
     return render(request, 'home/displayhistory.html', context)
     
     

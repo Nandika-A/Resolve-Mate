@@ -6,19 +6,23 @@
 </head>
 <body>
     <form method="GET">
-        {{ wfilter.form }}
+        {% csrf_token %}
+        <select name = "w">
+            <option value="" disabled selected>Select worker's profession</option>
+            {% for pf in professionfilter %}
+                <option value = "{{ pf }}">{{ pf }}</option>
+            {% endfor %}
+        </select>
         <button type = "submit">Apply</button>
     </form>
     <ul>
         <!-- add if clause if no profiles are fetched -->
-    {% if count > 0%}
     {% for profile in profiles %}
-            <li><a href = "{% url 'profile-detail' profile.id %}" >{{ profile.username }}</a></li>
-            <li>{{ profile.image }}</li>
-            <li>{{ profile.Star__0 }}</li>
+            <li><a href = "{% url 'profile-detail' profile.id %}" >{{ profile.workername.user.username }}</a></li>
+            <li>{{ profile.workername.image }}</li>
+            <li>{{ profile.Star }}</li>
             <li>{{ profile.biodata }}</li>
             <li>{{ profile.profession }}</li>
     {% endfor %}
-    {% endif %}
     </ul>
 </body>

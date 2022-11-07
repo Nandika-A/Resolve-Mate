@@ -22,9 +22,9 @@
         <td>
             <form action = '.' method = "POST">
                 {% csrf_token %}
-                <input type = "text" name = "worker"/>
                     <ul>
                         {% for w in worker %}
+                        <input type = "checkbox" name = "{{ w.workername }}"/>
                         <li>Name : {{ w.workername_id }}</li>
                         <li>Number of jobs assigned currently : {{ w.no_of_jobs }}</li>
                         <li>Star rating : {{ w.Star__0 }}</li>
