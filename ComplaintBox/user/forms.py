@@ -20,7 +20,6 @@ class AddDetails(UserCreationForm):
     address = forms.EmailField(required=True,
                              widget=forms.TextInput(attrs={'class': 'form-control'}))
     image=forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
-
     class Meta:
         model = UserProfile
         fields = [

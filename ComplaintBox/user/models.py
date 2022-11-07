@@ -1,7 +1,7 @@
 
 from email.policy import default
 from django.contrib.auth.models import User
-
+from PIL import Image
 from django.contrib.postgres.fields import JSONField
 from unittest.util import _MAX_LENGTH
 from django.db import models
@@ -59,7 +59,7 @@ class UserProfile(models.Model):
         size=2,default = None
     )
     '''
-
+    REQUIRED_FIELDS=['user']
     USERNAME_FIELD = 'user'
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -67,6 +67,15 @@ class UserProfile(models.Model):
         return super().save(*args, **kwargs)
     def __str__(self):
         return f'{self.user.username} Profile'  #will dispaly in a nice way otherwise will return object name
+
+    def save(self):
+        super().save()
+        img = Image.open(self.image.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
 class WorkerProfile(models.Model):
     workername=models.ForeignKey(UserProfile,on_delete=models.CASCADE)  
     profession = models.CharField(max_length=100, default=None)

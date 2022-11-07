@@ -78,20 +78,26 @@ def activate(request,uidb64,token):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        user_form = AddDetails(request.POST, instance=request.user)
-        profile_form = AddWorkerDetails(request.POST, request.FILES, instance=request.user.profile)
+        u_form = AddDetails(request.POST, instance=request.user)
+        p_form = AddWorkerDetails(request.POST,
+                                   request.FILES,
+                                   instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('profile')
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, 'Your profile is updated successfully')
-            return redirect(to='profile')
     else:
-        user_form = AddDetails(instance=request.user)
-        profile_form = AddWorkerDetails(instance=request.user.profile)
+        u_form = AddDetails(instance=request.user)
+        p_form = AddWorkerDetails(instance=request.user.profile)
 
-    return render(request, 'users/profile.html', {'user_form': user_form, 'profile_form': profile_form})
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
 
+    return render(request, 'users/profile.html', context)
 
 @login_required
 def  edit_profile(request):
