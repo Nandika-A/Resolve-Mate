@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse
+from django.contrib.auth.models import User
 import logging
 from django.shortcuts import redirect
 from .forms import CommentForm
@@ -10,6 +11,7 @@ from django.views.generic.edit import FormMixin
 from django.views.generic import DetailView
 from .forms import CommentForm
 from .models import Comment, TaskHistory 
+from .decorators import admin_only
 #from .filters import UserProfileFilter
 from django.views.generic import (
     ListView,
@@ -72,7 +74,8 @@ class ProfileDetailView(FormMixin, DetailView):
             TaskHistory.status = 'ONGOING'
             WorkerProfile.no_of_jobs += 1
             TaskHistory.save()
-            
+
+@admin_only            
 def adminpage(request):
     tasks = TaskHistory.objects.order_by('date_posted').filter(status = 'PENDING')
     pref = UserProfile.objects.filter(user_id = TaskHistory.assignedby.id).get('preference')
@@ -141,5 +144,6 @@ def displayhistory(request):
     }      
     return render(request, 'home/displayhistory.html', context)
     
-    
+        
+            
     
