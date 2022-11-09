@@ -1,28 +1,44 @@
+
+# users/views.py
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages 
-#to display success message to the user after registration on home page
-from .forms import UserRegistrationForm
-from django.contrib.auth.hashers import make_password, check_password
-def register(request):
-    if request.method == "POST":
-        form = UserRegistrationForm(request.POST) #created in user/forms.py
+from django.contrib.auth import login, authenticate, logout
+from django.urls import reverse
+
+from .forms import SignUpForm, LogInForm
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
         if form.is_valid():
-            #to get the username from the form to display it in the message
-            username = form.cleaned_data.get('username')
-            # to show success message
-            messages.success(request,f'Account created for {username}!')
-            '''
-            hashed_pwd = make_password("plain_text")
-            if check_password("plain_text", hashed_pwd):
-                '''
-            form.password = make_password('password')
-            form.save()
-            #user will be redirected to home page after registration
-            return redirect('homepage')
+            user = form.save()
+            login(request, user)
+            return redirect('home')
     else:
-        form = UserRegistrationForm()
-        #showing html page(register.html)
-        return render(request, 'user/register.html', {
-        "form" : form
-    })
+        form = SignUpForm()   
+    return render(request, 'user/signup.html', {'form': form})
+
+
+def log_in(request):
+    error = False
+    if request.user.is_authenticated:
+        return redirect('home')
+    if request.method == "POST":
+        form = LogInForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+            password = form.cleaned_data["password"]
+            user = authenticate(email=email, password=password)
+            if user:
+                login(request, user)  
+                return redirect('home')
+            else:
+                error = True
+    else:
+        form = LogInForm()
+
+    return render(request, 'user/login.html', {'form': form, 'error': error})
+
+
+def log_out(request):
+    logout(request)
+    return redirect(reverse('user:login'))

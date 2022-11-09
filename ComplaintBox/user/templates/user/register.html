@@ -1,19 +1,11 @@
 <!DOCTYPE html>
+<html>
 <head>
-    <title>Register</title>
+  <meta charset="utf-8">
+  <title>Authentication system</title>
 </head>
 <body>
-<div>
-    <form method = "POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <div>
-            <button type = "submit">Sign Up</button>
-        </div>
-    </form>
-    <div>
-        <small>Already have an account?</small>
-        <a href = "#">Sign In</a>
-    </div>
-</div>
+  {% block content %}
+  {% endblock %}
 </body>
+</html>

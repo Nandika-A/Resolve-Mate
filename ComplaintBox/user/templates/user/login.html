@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Authentication system</title>
+</head>
+<body>
+    {% if error %}
+<p><strong>Invalid email or password.</strong></p>
+{% endif %}
+<h2>Log In</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Log In</button>
+</form>
+</body>
+</html>

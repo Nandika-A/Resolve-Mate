@@ -1,7 +1,9 @@
-from user import views as user_views
+# users/urls.py
 from django.urls import path
+from .views import signup, log_in, log_out
 
 urlpatterns = [
-    #To direct user to register page
-    path('user_register/', user_views.register, name = 'register_as_user'),
+    path('signup/', signup, name='signup'),
+    path('login/', log_in, name='login'),
+    path('logout/', log_out, name='logout'),
 ]

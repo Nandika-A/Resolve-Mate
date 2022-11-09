@@ -1,40 +1,46 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 
-from unittest.util import _MAX_LENGTH
-from django.db import models
-from django.contrib.postgres.fields import ArrayField
-from django.core.validators import MaxValueValidator
-from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
-#from .manager import *
+from django.contrib.auth.models import AbstractUser
 
+from django.contrib.auth.base_user import BaseUserManager
 
+class CustomUserManager(BaseUserManager):
 
-#after making changes to models we have to make migration
-#after this go to users admin.py and register models
-# class Profile(models.Model):
-#     user=models.OneToOneField(User,on_delete=models.CASCADE)
-#     image=models.ImageField(default='default.jpg',upload_to='profile_pics')  #images will get saved in directory called profile_pics
-#
-#     def __str__(self):
-#         return f'{self.user.username} Profile'  #will dispaly in a nice way otherwise will return object name
+    def _create_user(self, email, password, **extra_fields):
+        """
+        Create and save a User with the given email and password.
+        """
+        if not email:
+            raise ValueError("The given email must be set")
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
+    def create_user(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_superuser", False)
+        return self._create_user(email, password, **extra_fields)
 
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
 
-# model containing user's data
-class UserProfile(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE,null=True)
-    
-    image=models.ImageField(default='default.jpg',upload_to='profile_pics')  #images will get saved in directory called profile_pics
-    Star: ArrayField(
-        models.DecimalField(blank=True, validators=[
-            MaxValueValidator(5)]),
-        size=2,
-    )
-    Address: models.TextField(default=None)
-    Phone_no: models.PositiveBigIntegerField(default=None)
-    Preference: models.JSONField(null=True, default=dict)
-    def __str__(self):
-        return f'{self.user.username} Profile'  #will dispaly in a nice way otherwise will return object name
-    
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError(
+                "Superuser must have is_staff=True."
+            )
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError(
+                "Superuser must have is_superuser=True."
+            )
+
+        return self._create_user(email, password, **extra_fields)
+class CustomUser(AbstractUser):
+    email = models.EmailField("email address", unique=True)
+
+    USERNAME_FIELD = "email" # make the user log in with the email
+    REQUIRED_FIELDS = ["username"]
+
+    objects = CustomUserManager()

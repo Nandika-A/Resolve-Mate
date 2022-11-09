@@ -1,24 +1,13 @@
-from django import forms 
 from django.contrib.auth.forms import UserCreationForm
-from .models import UserProfile
+from django import forms
 
-#django form for user registration:
-class UserRegistrationForm(UserCreationForm):
-    #additional fields to be included in inbuilt user registration form in addition to username and password
-    
-    Name = forms.CharField()
-    Email = forms.EmailField()
-    Address = forms.CharField(widget=forms.Textarea)
-    Phone_no = forms.IntegerField()
-    
+from .models import CustomUser
+
+class SignUpForm(UserCreationForm):
     class Meta:
-        model = UserProfile #form is saved in userprofile model
-        '''
-        widgets = {
-            'Password' : forms.PasswordInput()
-        }
-        '''
-        # the order in which the fields in the form are to be displayed:
-        fields = [
-            'Name', 'Phone_no', 'Email', 'Address', 'password1', 'password2'
-        ]
+        model = CustomUser
+        fields = ("username", "email")
+
+class LogInForm(forms.Form):
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
