@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 from unittest.util import _MAX_LENGTH
 from django.contrib.auth.models import AbstractUser
-
+from PIL import Image 
 from django.contrib.auth.base_user import BaseUserManager
 
 class CustomUserManager(BaseUserManager):
@@ -63,6 +63,16 @@ class Userdetails(models.Model):
     #         MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
     #     size=2,default = None
     # )
+    def save(self):
+        super().save()
+
+        img = Image.open(self.image.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
+
 class WorkerDetails(models.Model):
     worker =models.OneToOneField(Userdetails, on_delete=models.CASCADE)
     profession = models.CharField(max_length=100, default=None)
