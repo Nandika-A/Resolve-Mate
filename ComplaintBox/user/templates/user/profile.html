@@ -1,0 +1,75 @@
+<!--!DOCTYPE html>
+<html>
+
+    <div class="row my-3 p-3">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }} " style="cursor: pointer;"/>
+    </div>
+    {% if user_form.errors %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <div id="form_errors">
+                {% for key, value in user_form.errors.items %}
+                    <strong>{{ value }}</strong>
+                {% endfor %}
+            </div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+    <div class="form-content">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="small mb-1">Username:</label>
+                            {{ user_form.username }}
+                        <label class="small mb-1">Email:</label>
+                            {{ user_form.email }}
+                    </div>
+                    <div class="form-group">
+                        <a href="#">Change Password</a>
+                        <hr>
+                        <label class="small mb-1">Update Profile pic:</label>
+                        {{ profile_form.avatar }}
+                    </div>
+                    <label class="small mb-1">Bio:</label> {{ profile_form.bio }}
+                </div>
+            </div>
+            <br><br>
+            <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
+            <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+        </form>
+    </div>
+
+</html-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>profile</title>
+</head>
+<body>
+    <div>
+        <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+          <!-- <img class="rounded-circle account-img" src="{{ user.profile.image.url }}"> -->
+          <p class="text-secondary">{{ user_u.phone_no }}</p>
+          <p class="text-secondary">{{ u.address}}</p>
+          <p class="text-secondary">{{ u.star }}</p>
+          
+          <p class="text-secondary">{{ w.profession }}</p>
+          <p class="text-secondary">{{ w.biodata }}</p>
+          <p class="text-secondary">{{ w.star }}</p>
+          
+        
+        <form action="{% url 'user:editprofile' %}" method="POST"></form>
+        <a href="{% url 'user:editprofile' %}">iio</a>
+        </div>
+
+
+</body>
+</html>
