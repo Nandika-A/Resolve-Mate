@@ -33,13 +33,25 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'home',
     'user',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # make sure sites is included
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+# the social providers
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.twitter',
+
+    'django_filters',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,7 +83,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ComplaintBox.wsgi.application'
 
-
+# AUTHENTICATION_BACKENDS = (
+#     'django.contrib.auth.backends.ModelBackend', # existing backend
+#     'allauth.account.auth_backends.AuthenticationBackend',
+# )
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -81,6 +96,14 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+"""
 
 
 # Password validation
@@ -123,6 +146,24 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# Path where media is stored
+import os
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+#for images
+# Base url to serve media files
+MEDIA_URL = '/media/'
+#AUTH_USER_MODEL = "user.UserProfile"
+
+#AUTH_WORKER_MODEL = 'worker.WorkerProfile'
+
+#ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+#ACCOUNT_EMAIL_REQUIRED = True
+#ACCOUNT_USERNAME_REQUIRED = False
+#ACCOUNT_AUTHENTICATION_METHOD = 'Email'
+
 AUTH_USER_MODEL = 'user.CustomUser'
 TEMPLATES = [
     {
@@ -153,3 +194,11 @@ EMAIL_HOST_PASSWORD = 'pcoifztaswpvfjnh'
 EMAIL_PORT = 587
 LOGIN_REDIRECT_URL = 'homepage'
 LOGIN_URL = 'login'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# SITE_ID = 1
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# LOGIN_URL = 'login'
