@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
-from .models import CustomUser,Userdetails,WorkerDetails
+from .models import CustomUser,UserProfile,WorkerProfile
 
 class SignUpForm(UserCreationForm):
     class Meta:
@@ -30,7 +30,7 @@ class UpdateProfileForm(forms.ModelForm):
     address=forms.CharField(widget=forms.Textarea)
     
     class Meta:
-        model = Userdetails
+        model = UserProfile
         fields = ['image', 'phone_no','address']
 
 class UpdateWorkerForm(forms.ModelForm):
@@ -38,5 +38,5 @@ class UpdateWorkerForm(forms.ModelForm):
     profession=forms.CharField()
     
     class Meta:
-        model = WorkerDetails
+        model = WorkerProfile
         fields = ['biodata', 'profession']

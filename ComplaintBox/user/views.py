@@ -3,7 +3,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse
-from .models import Userdetails, WorkerDetails,CustomUser
+from .models import UserProfile, WorkerProfile,CustomUser
 from .forms import SignUpForm, LogInForm, UpdateUserForm, UpdateProfileForm, UpdateWorkerForm
 
 def signup(request):
@@ -51,15 +51,19 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def profile(request):
     if request.user.is_authenticated:
+        
         user=request.user.email
         c=CustomUser.objects.get(email=user)
         
-        u=Userdetails.objects.get(user=c)
+        u=UserProfile.objects.get(user=c)
+        try:
+            w=WorkerProfile.objects.get(worker=u)
+        except WorkerProfile.DoesNotExist:
+            w = None
         
-        w=WorkerDetails.objects.get(worker=u)
         
-        #w = get_object_or_404(WorkerDetails, worker__user__username=user)
-        #u=get_object_or_404(Userdetails, user__username=user)
+        #w = get_object_or_404(WorkerProfile, worker__user__username=user)
+        #u=get_object_or_404(UserProfile, user__username=user)
     return render(request, 'user/profile.html', {'w':w,'u': u,'request.user':request.user})
     #return render(request, 'user/profile.html')
 def editprofile(request):
@@ -77,10 +81,10 @@ def editprofile(request):
         if worker_form.is_valid():
             user=request.user.email
             c=CustomUser.objects.get(email=user)
-            u=Userdetails.objects.get(user=c)
+            u=UserProfile.objects.get(user=c)
 
             worker1=worker_form.save()
-            worker1.worker=WorkerDetails.objects.get(worker=u)
+            worker1.worker=WorkerProfile.objects.get(worker=u)
             worker1.save()
 
             #return redirect('profile')

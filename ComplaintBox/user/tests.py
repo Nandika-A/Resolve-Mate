@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import CustomUser,Userdetails,WorkerDetails
+from .models import CustomUser,UserProfile,WorkerProfile
 
 class UserProfileTest(TestCase):
 
@@ -10,14 +10,14 @@ class UserProfileTest(TestCase):
             password="123",
         )
         user.save()
-        userd = Userdetails(
+        userd = UserProfile(
             user=user,
             phone_no="345",
             address="jio",
 
         )
         userd.save()
-        userw = WorkerDetails(
+        userw = WorkerProfile(
             worker=userd,
             profession="345",
             biodata="jio",

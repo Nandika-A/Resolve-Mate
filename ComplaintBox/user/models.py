@@ -44,9 +44,9 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = ["username"]
 
     objects = CustomUserManager()
-class Userdetails(models.Model):
+class UserProfile(models.Model):
 
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser,null =True, on_delete=models.SET_NULL)
     
     image=models.ImageField(default='default.jpg',upload_to='profile_pics')  #images will get saved in directory called profile_pics
     
@@ -55,16 +55,16 @@ class Userdetails(models.Model):
     #         MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
     #     default = []
     # )
-    phone_no= models.CharField(default=None,max_length=50)
-    address = models.TextField(default = None)
+    phone_no= models.CharField(default='0000',max_length=50)
+    address = models.TextField(default = '0000')
     star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
     # preference= JSONField(
     #     models.DecimalField(blank=True, validators=[
     #         MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
     #     size=2,default = None
     # )
-    def save(self):
-        super().save()
+    def save(self,*args,**kwargs):
+        super().save(*args,**kwargs)
 
         img = Image.open(self.image.path)
 
@@ -73,8 +73,8 @@ class Userdetails(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
-class WorkerDetails(models.Model):
-    worker =models.OneToOneField(Userdetails, on_delete=models.CASCADE)
+class WorkerProfile(models.Model):
+    worker =models.OneToOneField(UserProfile, null =True, on_delete=models.SET_NULL)
     profession = models.CharField(max_length=100, default=None)
     biodata = models.TextField(default = None)
     star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
