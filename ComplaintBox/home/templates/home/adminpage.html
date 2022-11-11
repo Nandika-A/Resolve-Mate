@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<head>
+    <title>Admin page</title>
+</head>
+<body>
+   <table>
+    <tr>
+        <td>Complaint</td>
+        <td>Assigned by</td>
+        <td>Preferences(if any)</td>
+        <td>Worker assigned</td>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td>{{ task.complaint }}</td>
+        <td>{{ task.assignedby }}</td>
+        {% if {{ pref }} %}
+        <td>{{ pref }}</td>
+        {% else %}
+        <td>---</td>
+        {% endif %}
+        <td>
+            <form action = '.' method = "POST">
+                {% csrf_token %}
+                    <ul>
+                        {% for w in worker %}
+                        <input type = "checkbox" name = "{{ w.workername }}"/>
+                        <li>Name : {{ w.workername_id }}</li>
+                        <li>Number of jobs assigned currently : {{ w.no_of_jobs }}</li>
+                        <li>Star rating : {{ w.Star_0 }}</li>
+                        <br>
+                        <br>
+                    </ul>
+                <input type = "submit" value = "Save" />
+            </form>
+        </td>
+    </tr>
+   </table>
+</body>

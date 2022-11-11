@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks History</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td>Date posted</td>
+                <td>Complaint</td>
+                <td>Worker assigned</td>
+                <td>Status</td>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                <td><a href = "{% url 'complaint_detailview' object.pk %}">{{ task.date_posted }}</a></td>
+                <td><a href = "{% url 'complaint_detailview' object.pk %}"></a>{{ task.complaint }}</a></td>
+                <td><a href = "{% url 'complaint_detailview' object.pk %}"></a>{{ task.assigned_workername.username}}</a></td>
+                <td><a href = "{% url 'complaint_detailview' object.pk %}"></a>{{ task.status }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

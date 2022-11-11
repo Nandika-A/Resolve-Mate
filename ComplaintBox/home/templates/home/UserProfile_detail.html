@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        {{object.username}}'s profile
+    </title>
+</head>
+<body>
+    
+    <ul>
+            <li>{{ object.username }}</li>
+            <li>{{ object.image }}</li>
+            <li>{{ object.Star }}</li>
+            <li>{{ object.biodata }}</li>
+            <li>{{ object.profession }}</li>
+    
+    </ul>
+    <form action = '.' method = 'POST'>
+        {% csrf_token %}
+        <input type = 'text' name = 'complaint' placeholder = 'Type your complaint here'/>
+        <input type = 'submit' value = 'Save' />
+    <a href = "{% url 'history' %}">Check your complaints</a>
+    </form>
+</body>
