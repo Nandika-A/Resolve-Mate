@@ -24,7 +24,7 @@
                 {% csrf_token %}
                     <ul>
                         {% for w in worker %}
-                        <input type = "checkbox" name = "{{ w.workername }}"/>
+                        <input type = "text" name = "{{ w.workername }}"/>
                         <li>Name : {{ w.workername_id }}</li>
                         <li>Number of jobs assigned currently : {{ w.no_of_jobs }}</li>
                         <li>Star rating : {{ w.Star_0 }}</li>

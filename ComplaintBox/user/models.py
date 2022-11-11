@@ -23,15 +23,15 @@ from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUse
 
 
 # model containing user's data
-class UserProfile(models.Model):
+class UserProfile(AbstractBaseUser):
     #both user and worker data can be accessed using one table, just by defining roles
     class Role(models.TextChoices):
         USER = "USER", "User"
         WORKER = "WORKER", "Worker"
     
-    user=models.OneToOneField(User,on_delete=models.CASCADE,null=True)
-    #username = models.CharField(max_length = 200, default = None)
-    #email = models.EmailField(max_length=200, help_text='Required')
+    #user=models.OneToOneField(User,on_delete=models.CASCADE,null=True)
+    username = models.CharField(max_length = 200, blank = True, null = True, unique = True)
+    email = models.EmailField(max_length=200, help_text='Required')
     base_role = Role.USER
     role = models.CharField(max_length=50, choices = Role.choices)
     image=models.ImageField(default='default.jpg',upload_to='profile_pics')  #images will get saved in directory called profile_pics
@@ -49,7 +49,7 @@ class UserProfile(models.Model):
     
     
     
-    phone_no= models.CharField(default=None,max_length=50)
+    #phone_no= models.CharField(default=None,max_length=50)
 
     address = models.TextField(default = None)
     '''
@@ -59,8 +59,8 @@ class UserProfile(models.Model):
         size=2,default = None
     )
     '''
-    REQUIRED_FIELDS=['user']
-    USERNAME_FIELD = 'user'
+    REQUIRED_FIELDS=['email', 'phone_no', 'role']
+    USERNAME_FIELD = 'username'
     def save(self, *args, **kwargs):
         if not self.pk:
             self.role = self.base_role
@@ -76,6 +76,7 @@ class UserProfile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+            
 class WorkerProfile(models.Model):
     workername=models.ForeignKey(UserProfile,on_delete=models.CASCADE)  
     profession = models.CharField(max_length=100, default=None)

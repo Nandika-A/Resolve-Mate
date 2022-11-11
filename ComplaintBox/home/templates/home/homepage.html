@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="homepage2.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'home/homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'home/https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css' %}">
 </head>
 <body>
     <nav class="navbarm bgm h-nav-resp">
         <ul class="nav-listm vis-nav-resp">
             <div class="logo">
-                <img src="imgs/homepageLogo.png" alt="Logo">
+                <img src="{% static 'home/media/homepageLogo.png' %}" alt="Logo">
             </div>
             <li> <a href="#Home">Home</a> </li>
             <li> <a href="#About">About</a> </li>

@@ -20,6 +20,10 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
+
+def home(request):
+    return render(request, 'home/homepage.html')
+    
 def homepage(request):
     '''
     profiles = UserProfile.objects.filter(role = 'WORKER').order_by('Star__0')
