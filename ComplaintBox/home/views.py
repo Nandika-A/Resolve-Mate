@@ -22,6 +22,9 @@ from django.views.generic import (
 )
 def home(request):
     return render(request, 'home/homepage.html')
+def about(request):
+    return render(request, 'home/about.html')
+
 def homepage(request):
     
     professionfilter = WorkerProfile.objects.values_list('profession')

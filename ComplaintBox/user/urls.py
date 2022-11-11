@@ -5,12 +5,12 @@ from django.conf.urls.static import static
 from django.urls import include
 #from .views import activate
 
-from .views import signup, log_in, log_out,profile,editprofile
+from .views import signup, login, logout,profile,editprofile
 app_name = "user"
 urlpatterns = [
     path('signup/', signup, name='signup'),
-    path('login/', log_in, name='login'),
-    path('logout/', log_out, name='logout'),
+    path('login/', login, name='login'),
+    path('logout/', logout, name='logout'),
     path('profile/', profile, name='profile'),
     path('editprofile/', editprofile, name='editprofile'),
     path ('',include('home.urls')),

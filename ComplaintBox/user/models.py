@@ -63,6 +63,8 @@ class UserProfile(models.Model):
     #         MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
     #     size=2,default = None
     # )
+    def __str__(self):
+        return self.user.username
     def save(self,*args,**kwargs):
         super().save(*args,**kwargs)
 
@@ -79,3 +81,6 @@ class WorkerProfile(models.Model):
     biodata = models.TextField(default = None)
     star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
     #UPI = models.CharField(max_length=100, default=None)
+
+    def __str__(self):
+        return self.worker.user.username

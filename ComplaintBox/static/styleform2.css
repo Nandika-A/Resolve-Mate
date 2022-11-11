@@ -1,0 +1,356 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Ubuntu&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.body-form{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: url("imgs/complaintpic.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-blend-mode: darken;
+}
+
+
+html{
+    scroll-behavior: smooth;
+}
+
+.logom{
+width: 14%;
+margin-left: 23px;
+}
+
+.logom img{
+    max-width: 60px;
+    border: 2px solid white;
+    border-radius: 39px;
+    max-height: 66px;
+    margin-left: 44px;
+    display: block;
+    margin: auto;
+}
+
+.navbarm{
+    display: flex;
+    /* position: sticky; */
+    top: 0px;
+}
+
+.nav-listm{
+    width: 72%;
+    /* background-color: rgb(2, 2, 2); */
+    display: flex;
+    align-items: center;
+    margin-left: 38px;
+    padding: 9px;
+    margin-bottom: 0px;
+}
+
+.navbarm li{
+    list-style: none;
+    /* padding: 22px 30px; */
+}
+
+.navbarm li a{
+    text-decoration: none;
+    padding: 22px 30px;
+
+    color: white;
+    font-size: 20px;
+    font-family: 'Ubuntu', sans-serif;
+transition: 0.5s;
+
+}
+
+.navbarm li a:hover{
+    color: rgb(171, 165, 165);
+}
+
+.right-nav{
+    width: 28%;
+    /* background-color: purple; */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0px 23px;
+}
+
+.btnm{
+    padding: 12px 19px;
+    margin: 6px;
+    color: white;
+    border: 2px solid white;
+    border-radius: 12px;
+    background-color: #dc3545;;
+    font-family: 'Ubuntu', sans-serif;
+font-size: 15px;
+transition: 0.5s;
+}
+
+.btnm:hover{
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    background-color: #bb2d3b;
+    opacity: 0.9;
+}
+
+.bgm{
+    background-color: rgb(0 0 0 / 85%);
+
+}
+
+.burger{
+    position: absolute;
+    top: 5%;
+    right: 15px;
+    display: none;
+    cursor: pointer;
+}
+
+.lineb{
+    background: white;
+    width: 33px;
+    height: 4px;
+    margin: 3px 3px;
+}
+
+
+.container{
+    /* height: 100vh; */
+    width: 100%;
+    max-width: 650px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 28px;
+    margin: 0 28px;
+    border-radius: 10px;
+    box-shadow: inset -2px 2px 2px white;
+}
+
+.form-title{
+    font-size: 26px;
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 6px;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    border-bottom: solid 1px white;
+}
+
+.main-form-info{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.input-box{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding-bottom: 15px;
+}
+
+.input-box label{
+    /* width: 100%; */
+    color: white;
+    font-size: 20px;
+    font-weight: 400;
+    margin: 5px 0;
+}
+
+.input-box input,.select-box{
+    height: 40px;
+    width: 95%;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid grey;
+    padding: 0 10px;
+}
+.imageInput{
+    border:none !important;
+    color: white;
+} 
+textarea{
+    border-radius: 7px;
+    outline: none;
+    border: 1.6px solid #baaaaa;
+    color: #726868;
+    padding: 16px 10px;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    width: 95%;
+}
+
+textarea:hover,textarea:focus{
+    background-color: #fafafa;
+    border-color: black;
+    outline: none;
+
+}
+
+.form-submit-btn input{
+    cursor: pointer;
+}
+
+.form-submit-btn{
+    margin-top: 40px;
+}
+
+.form-submit-btn input{
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 20px;
+    padding: 10px;
+    border:none;
+    border-radius: 3px;
+    color: rgb(209, 209, 209);
+    background: rgba(63, 114, 76, 0.7);
+}
+
+.form-submit-btn input:hover{
+    background: rgba(56, 204, 93, 0.7);
+    color: rgb(255, 255, 255);
+}
+
+.select-box{
+    cursor: pointer;
+    border: 1.6px solid #baaaaa;
+    color: #726868;
+    appearance: none;
+    transition: all 0.2s ease;
+}
+
+.select-box::-ms-expand{
+    display: none;
+}
+
+.select-box:hover, .select-box:focus{
+    background-color: #fafafa;
+    border-color: black;
+    outline: none;
+}
+
+.arrow{
+    position: relative;
+    right: 25px;
+    margin: 18px 3px 0 0 ;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    border-width: 8px 5px 0 5px;
+    border-style: solid;
+    border-color: #7b7b7b transparent transparent transparent;
+
+}
+
+.arrow2{
+top: 0px;
+}
+
+.select-box:hover + .arrow, .select-box:focus + .arrow{
+    border-top-color: blue;
+}
+
+.box{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 12px;
+    padding-bottom: 7px;
+    color:white;
+}
+
+.check{
+    margin-right: 15px;
+    position: relative;
+}
+
+.check::before{
+    content: "";
+    display: inline-flex;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    vertical-align: 2px;
+    border: 2px solid #cccccc;
+    padding: 2.5px;
+    background-color: transparent;
+    background-clip: content-box;
+    transition: all 0.2s ease;
+
+}
+
+.check::after{
+    border-right: 2px solid black;
+    border-top: 2px solid black;
+    content: "";
+    height: 20px;
+    left: 2px;
+    position: absolute;
+    top: 7px;
+    transform: scaleX(-1) rotate(135deg);
+    transform-origin: left top;
+    width: 7px;
+    display: none;
+}
+
+.check-button{
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.check-button:hover + .check::before{
+    border-color: blue;
+}
+
+.check-button:checked + .check::before{
+    border-color: rgb(16, 250, 16);
+}
+
+.check-button:checked +.check::after{
+    animation: check 0.8s ease 0s running ;
+    display: block;
+    width: 7px;
+    height: 20px;
+    border-color: green;
+}
+
+@keyframes check {
+    0%{height: 0; width: 0;}
+    25%{height: 0; width: 7px;}
+    50%{height: 20px; width: 7px;}
+    0%{height: 0; width: 0;}
+    
+}
+
+@media(max-width: 600px){
+    .container{
+        min-width: 280px;
+    }
+
+    .input-box{
+        margin-bottom: 12px;
+        width: 100%;
+    }
+
+
+    .main-form-info{
+        max-height: 380px;
+        overflow: auto;
+    }
+
+    
+}

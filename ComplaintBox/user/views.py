@@ -18,7 +18,7 @@ def signup(request):
     return render(request, 'user/signup.html', {'form': form})
 
 
-def log_in(request):
+def login(request):
     error = False
     if request.user.is_authenticated:
         return redirect('home')
@@ -39,7 +39,7 @@ def log_in(request):
     return render(request, 'user/login.html', {'form': form, 'error': error})
 
 
-def log_out(request):
+def logout(request):
     logout(request)
     return redirect(reverse('user:login'))
 
@@ -69,30 +69,30 @@ def profile(request):
 def editprofile(request):
     if request.method == 'POST':
         
-        #user_form = UpdateUserForm(request.POST, instance=request.user)
+        user_form = UpdateUserForm(request.POST, instance=request.user)
         #profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user)
-        worker_form=UpdateWorkerForm(request.POST,instance=request.user ) #check if .profile should be there
+        #worker_form=UpdateWorkerForm(request.POST,instance=request.user ) #check if .profile should be there
         
         
-        # if user_form.is_valid():
+        if user_form.is_valid():
             
-        #   user_form.save()
+          user_form.save()
         
-        if worker_form.is_valid():
-            user=request.user.email
-            c=CustomUser.objects.get(email=user)
-            u=UserProfile.objects.get(user=c)
+        # if worker_form.is_valid():
+        #     user=request.user.email
+        #     c=CustomUser.objects.get(email=user)
+        #     u=UserProfile.objects.get(user=c)
 
-            worker1=worker_form.save()
-            worker1.worker=WorkerProfile.objects.get(worker=u)
-            worker1.save()
+        #     worker1=worker_form.save()
+        #     worker1.worker=WorkerProfile.objects.get(worker=u)
+        #     worker1.save()
 
             #return redirect('profile')
 
         
     else:
-        #user_form = UpdateUserForm(instance=request.user)
+        user_form = UpdateUserForm(instance=request.user)
         #profile_form = UpdateProfileForm(instance=request.user)
-        worker_form=UpdateWorkerForm(instance=request.user)
+        #worker_form=UpdateWorkerForm(instance=request.user)
     #return render(request, 'user/editprofile.html', {'user_form': user_form, 'profile_form': profile_form, 'worker_form' : worker_form})
-    return render(request, 'user/editprofile.html', {'worker_form': worker_form})
+    return render(request, 'user/editprofile.html', {'user_form': user_form})
