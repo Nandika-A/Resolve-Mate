@@ -1,8 +1,11 @@
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth.models import User
 import logging
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import redirect
 from .forms import CommentForm
+from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 #from asyncio import taskgroups
 from .models import TaskHistory
@@ -10,7 +13,8 @@ from user.models import UserProfile, WorkerProfile
 from django.views.generic.edit import FormMixin
 from django.views.generic import DetailView
 from .forms import CommentForm
-from .models import Comment, TaskHistory 
+from .models import Comment, TaskHistory
+from user.models import CustomUser 
 from .decorators import admin_only
 #from .filters import UserProfileFilter
 from django.views.generic import (
@@ -129,14 +133,22 @@ class DeleteComplaintView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == complaint.author:
             return True
         return False
-    
+
+@login_required
 def displayhistory(request):
-    tasks = TaskHistory.objects.filter(assignedby_id = request.user.id)
-    context = {
-        'tasks' : tasks
-    }      
-    return render(request, 'home/displayhistory.html', context)
-    
+    if request.user.is_authenticated:
+        
+        user=request.user
+        c=CustomUser.objects.get(email=user)
+        
+        
+        tasks = TaskHistory.objects.filter(assignedby = c)
+        context = {
+            'tasks' : tasks,
+            'request.user' : request.user,
+            'assignedby' : assignedby
+            }      
+    return render(request, 'home/displayhistory.html',context)
         
             
     

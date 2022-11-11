@@ -1,20 +1,22 @@
 
 # user/views.py
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login as django_login, authenticate, logout as django_logout
 from django.urls import reverse
 from .models import UserProfile, WorkerProfile,CustomUser
 from .forms import SignUpForm, LogInForm, UpdateUserForm, UpdateProfileForm, UpdateWorkerForm
+from django.contrib.auth.decorators import login_required
 
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
+            django_login(request, user)
             return redirect('home')
     else:
         form = SignUpForm()   
+
     return render(request, 'user/signup.html', {'form': form})
 
 
@@ -40,10 +42,11 @@ def login(request):
 
 
 def logout(request):
-    logout(request)
+    django_logout(request)
     return redirect(reverse('user:login'))
+    
 
-from django.contrib.auth.decorators import login_required
+
 
 
 

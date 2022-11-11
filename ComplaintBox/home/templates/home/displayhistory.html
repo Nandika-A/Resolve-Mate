@@ -21,6 +21,8 @@
                 <td><a href = "{% url 'complaint_detailview' object.pk %}"></a>{{ task.complaint }}</a></td>
                 <td><a href = "{% url 'complaint_detailview' object.pk %}"></a>{{ task.assigned_workername.username}}</a></td>
                 <td><a href = "{% url 'complaint_detailview' object.pk %}"></a>{{ task.status }}</a></td>
+                <h2 class="account-heading">{{ assignedby_user }}</h2>
+                <h2 class="account-heading">{{ request.user }}</h2>
             </tr>
             {% endfor %}
         </table>
