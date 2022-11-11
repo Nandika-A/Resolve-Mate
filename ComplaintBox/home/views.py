@@ -28,7 +28,7 @@ def homepage(request):
         p = request.GET.get('w')
         profiles = WorkerProfile.objects.filter(profession = p).order_by('Star')
     else:
-        profiles =  WorkerProfile.objects.order_by('Star')
+        profiles =  WorkerProfile.objects.order_by('star')
     context = {
         'professionfilter' : professionfilter,
         'profiles' : profiles
