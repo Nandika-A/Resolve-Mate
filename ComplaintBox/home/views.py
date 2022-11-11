@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth.models import User
 import logging
+from django.shortcuts import get_list_or_404, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import redirect
@@ -32,6 +33,10 @@ def about(request):
 def homepage(request):
     
     professionfilter = WorkerProfile.objects.values_list('profession')
+    l1=[]
+    for x in professionfilter:
+        if x not in l1:
+            l1.append(x)
     if request.method == "GET":
         p = request.GET.get('w')
         profiles = WorkerProfile.objects.filter(profession = p).order_by('star')
@@ -39,7 +44,8 @@ def homepage(request):
         profiles =  WorkerProfile.objects.order_by('star')
     context = {
         'professionfilter' : professionfilter,
-        'profiles' : profiles
+        'profiles' : profiles,
+        'l1':l1
     }
     if profiles.count==0:
         return render(request, "home/home.html")
@@ -91,23 +97,28 @@ def adminpage(request):
         
 
  
-def detailed_task(request, id):
+def detailed_task(request, pk):
    
- if request.method == 'POST':
-    cf = CommentForm(request.POST or None)
-    if cf.is_valid():
-      content = request.POST.get('content')
-      comment = Comment.objects.create(post = TaskHistory, user = request.user, content = content)
-      comment.save()
-      return redirect(TaskHistory.get_absolute_url())
+    if request.method == 'POST':
+        cf = CommentForm(request.POST or None)
+        if cf.is_valid():
+            content = request.POST.get('content')
+            comment = Comment.objects.create(post = TaskHistory, user = request.user, content = content)
+            comment.save()
+            return redirect(TaskHistory.get_absolute_url())
     else:
-      cf = CommentForm()
-       
+        cf = CommentForm()
+        # task = get_object_or_404(TaskHistory, pk=pk)
+        # c=CustomUser.objects.get(email=user)
+        
+        # u=UserProfile.objects.get(user=c)
     context ={
-      'comment_form':cf,
-      }
+        'comment_form':cf
+        # 'task':task,
+        # 'u':u
+        }
     return render(request, 'home / complaint_detail.html', context)
-  
+    
     
 class ComplaintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskHistory
