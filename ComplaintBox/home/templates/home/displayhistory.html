@@ -20,9 +20,11 @@
             <tr>
                 
                 <tr>
-                    <td>{{ task.complaint}}</td>
-                    <td>{{ task.assigned_workername.username}}</td>
-                    <td>{{ task.status}}</td>
+                    
+                    <td><a href = "{% url 'detailed_task' pk=task.assignedby.id %}">{{ task.date_posted }}</a></td>
+                <td><a href = "{% url 'detailed_task' pk=task.assignedby.id %}">{{ task.complaint }}</a></td>
+                <td><a href = "{% url 'detailed_task' pk=task.assignedby.id %}">{{ task.assigned.worker.user.username}}</a></td>
+                <td><a href = "{% url 'detailed_task' pk=task.assignedby.id %}">{{ task.status }}</a></td>
                 </tr>
                 
                 
