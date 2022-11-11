@@ -20,13 +20,14 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-
+def home(request):
+    return render(request, 'home/homepage.html')
 def homepage(request):
     
     professionfilter = WorkerProfile.objects.values_list('profession')
     if request.method == "GET":
         p = request.GET.get('w')
-        profiles = WorkerProfile.objects.filter(profession = p).order_by('Star')
+        profiles = WorkerProfile.objects.filter(profession = p).order_by('star')
     else:
         profiles =  WorkerProfile.objects.order_by('star')
     context = {
