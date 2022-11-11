@@ -31,7 +31,7 @@ def login(request):
             password = form.cleaned_data["password"]
             user = authenticate(email=email, password=password)
             if user:
-                login(request, user)  
+                django_login(request, user)  
                 return redirect('home')
             else:
                 error = True

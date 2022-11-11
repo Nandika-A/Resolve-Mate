@@ -91,7 +91,7 @@ def adminpage(request):
         
 
  
-def complaint_detailview(request, id):
+def detailed_task(request, id):
    
  if request.method == 'POST':
     cf = CommentForm(request.POST or None)
@@ -138,15 +138,16 @@ class DeleteComplaintView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 def displayhistory(request):
     if request.user.is_authenticated:
         
-        user=request.user
-        c=CustomUser.objects.get(email=user)
+        user1=request.user
+        c=CustomUser.objects.get(email=user1)
+        u=UserProfile.objects.get(user=c)
+
         
-        
-        tasks = TaskHistory.objects.filter(assignedby = c)
+        tasks = TaskHistory.objects.filter(assignedby = u)
         context = {
             'tasks' : tasks,
-            'request.user' : request.user,
-            'assignedby' : assignedby
+            'request.user' : request.user
+            
             }      
     return render(request, 'home/displayhistory.html',context)
         

@@ -13,7 +13,7 @@ class TaskHistory(models.Model):
      #auto_now_add only when date is created
      #default
      assignedby = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  #IF USER IS DELETED POSTS ARE DELETED
-     assigned=models.ForeignKey(WorkerProfile,on_delete=models.CASCADE)  
+     assigned=models.ForeignKey(WorkerProfile,on_delete=models.CASCADE,null =True,default=None)  
      profession=models.CharField(max_length=100)
      status=models.CharField(default = "PENDING", max_length = 50)
     #  Comments=ArrayField(

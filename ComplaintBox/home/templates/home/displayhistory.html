@@ -8,6 +8,7 @@
 </head>
 <body>
     <div>
+        <h2 class="account-heading">{{ request.user }}</h2>
         <table>
             <tr>
                 <td>Date posted</td>
@@ -17,12 +18,14 @@
             </tr>
             {% for task in tasks %}
             <tr>
-                <td><a href = "{% url 'complaint_detailview' object.pk %}">{{ task.date_posted }}</a></td>
-                <td><a href = "{% url 'complaint_detailview' object.pk %}"></a>{{ task.complaint }}</a></td>
-                <td><a href = "{% url 'complaint_detailview' object.pk %}"></a>{{ task.assigned_workername.username}}</a></td>
-                <td><a href = "{% url 'complaint_detailview' object.pk %}"></a>{{ task.status }}</a></td>
-                <h2 class="account-heading">{{ assignedby_user }}</h2>
-                <h2 class="account-heading">{{ request.user }}</h2>
+                
+                <tr>
+                    <td>{{ task.complaint}}</td>
+                    <td>{{ task.assigned_workername.username}}</td>
+                    <td>{{ task.status}}</td>
+                </tr>
+                
+                
             </tr>
             {% endfor %}
         </table>
