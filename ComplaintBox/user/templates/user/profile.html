@@ -53,7 +53,7 @@
                             <h3>{{ user.username }}</h3>
                         </div>
                         <div class="card-body">
-                            <p class="mb-0"><strong class="pr-1">Username:</strong>321000001</p>
+                            <p class="mb-0"><strong class="pr-1">Username:</strong>{{ user.username }}</p>
                             <!-- <p class="mb-0"><strong class="pr-1">Class:</strong>4</p>
                   <p class="mb-0"><strong class="pr-1">Section:</strong>A</p> -->
                         </div>
@@ -89,6 +89,7 @@
                             </table>
                         </div>
                     </div>
+                    {% if w.profession %}
                     <div style="height: 26px"></div>
                     <div class="card shadow-sm">
                         <div class="card-header bg-transparent border-0">
@@ -114,7 +115,7 @@
                             </table>
                         </div>
                     </div>
-
+                    {% endif %}
 
 
                     
