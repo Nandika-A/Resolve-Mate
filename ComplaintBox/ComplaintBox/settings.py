@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',  # make sure sites is included
+    
     # 'allauth',
     # 'allauth.account',
     # 'allauth.socialaccount',

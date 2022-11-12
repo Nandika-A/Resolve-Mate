@@ -105,19 +105,25 @@ def detailed_task(request, pk):
             content = request.POST.get('content')
             comment = Comment.objects.create(post = TaskHistory, user = request.user, content = content)
             comment.save()
-            return redirect(TaskHistory.get_absolute_url())
+            context ={
+            'comment_form':cf,
+            
+            # 'u':u
+            }
+            return redirect('detailed_task')
+
     else:
         cf = CommentForm()
-        # task = get_object_or_404(TaskHistory, pk=pk)
+        task = get_object_or_404(TaskHistory, pk=pk)
         # c=CustomUser.objects.get(email=user)
         
         # u=UserProfile.objects.get(user=c)
-    context ={
-        'comment_form':cf
-        # 'task':task,
-        # 'u':u
-        }
-    return render(request, 'home / complaint_detail.html', context)
+        context ={
+            'comment_form':cf,
+            'task':task,
+            # 'u':u
+            }
+    return render(request, 'home/detailed_task.html', context)
     
     
 class ComplaintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -125,15 +131,17 @@ class ComplaintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     fields = ['complaint','title']
     success_url = ''
 
+    
     def form_valid(self, form):
-        form.instance.assignedby = self.request.user
+        form.instance.assignedby.user = self.request.user
         return super().form_valid(form)
 
     def test_func(self):
         complaint = self.get_object()
-        if self.request.user == complaint.assignedby:
+        if self.request.user == complaint.assignedby.user:
             return True
         return False
+
 
 class DeleteComplaintView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = TaskHistory
