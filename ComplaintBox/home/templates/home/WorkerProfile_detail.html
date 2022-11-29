@@ -14,10 +14,5 @@
             <li>{{ object.profession }}</li>
     
     </ul>
-    <form action = '.' method = 'POST'>
-        {% csrf_token %}
-        <input type = 'text' name = 'complaint' placeholder = 'Type your complaint here'/>
-        <input type = 'submit' value = 'Save' />
-    <a href = "{% url 'history' %}">Check your complaints</a>
-    </form>
+    
 </body>

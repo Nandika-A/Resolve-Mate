@@ -35,13 +35,13 @@ def homepage(request):
     professionfilter = WorkerProfile.objects.values_list('profession')
     l1=[]
     for x in professionfilter:
-        if x not in l1:
-            l1.append(x)
+        if x[0] not in l1:
+            l1+=[x[0]]
     if request.method == "GET":
         p = request.GET.get('w')
-        profiles = WorkerProfile.objects.filter(profession = p).order_by('star')
+        profiles = WorkerProfile.objects.filter(profession = p).order_by('-star')
     else:
-        profiles =  WorkerProfile.objects.order_by('star')
+        profiles =  WorkerProfile.objects.order_by('-star')
     context = {
         'professionfilter' : professionfilter,
         'profiles' : profiles,
@@ -67,16 +67,16 @@ def complaintform(request):
     
 class ProfileDetailView(FormMixin, DetailView):
     model = WorkerProfile
-    def detailedprofile(request):
-        context = {}
-        if request.method == "POST":
-            TaskHistory.profession = object.profession
-            TaskHistory.complaint = request.POST.get('complaint')
-            TaskHistory.assignedby = request.user.username
-            TaskHistory.assigned = object.workername
-            TaskHistory.status = 'ONGOING'
-            WorkerProfile.no_of_jobs += 1
-            TaskHistory.save()
+    # def detailedprofile(request):
+        
+        # if request.method == "POST":
+        #     TaskHistory.profession = object.profession
+        #     TaskHistory.complaint = request.POST.get('complaint')
+        #     TaskHistory.assignedby = request.user.username
+        #     TaskHistory.assigned = object.workername
+        #     TaskHistory.status = 'ONGOING'
+        #     WorkerProfile.no_of_jobs += 1
+        #     TaskHistory.save()
 
 @admin_only            
 def adminpage(request):
@@ -145,11 +145,11 @@ class ComplaintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class DeleteComplaintView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = TaskHistory
-    success_url = ''
+    success_url = '/history/'
 
     def test_func(self):
         complaint = self.get_object()
-        if self.request.user == complaint.author:
+        if self.request.user == complaint.assignedby.user:
             return True
         return False
 

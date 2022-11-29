@@ -38,12 +38,14 @@ class CustomUserManager(BaseUserManager):
 
         return self._create_user(email, password, **extra_fields)
 class CustomUser(AbstractUser):
-    email = models.EmailField("email address", unique=True)
+    
+    email = models.EmailField(verbose_name="Email", null=True, unique=True, max_length=100)
 
     USERNAME_FIELD = "email" # make the user log in with the email
     REQUIRED_FIELDS = ["username"]
 
     objects = CustomUserManager()
+
 class UserProfile(models.Model):
 
     user = models.OneToOneField(CustomUser,null =True, on_delete=models.SET_NULL)
