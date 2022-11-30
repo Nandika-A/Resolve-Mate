@@ -13,6 +13,7 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields =['content']
+        
 '''      
 class AssignWorkerForm(forms.ModelForm):
     class Meta:

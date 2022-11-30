@@ -64,9 +64,52 @@ def complaintform(request):
 
     return render(request, "home/tasks.html", context)
 
+def profile_detail(request, pk):
+    worker = get_object_or_404(WorkerProfile, pk=pk)
+    context ={
+            'worker':worker,
+            # 'u':u
+            }
+    if request.method == "POST":
+            taskHistory = TaskHistory()
+            taskHistory.profession = worker.profession
+            taskHistory.title = request.POST.get('title')
+            taskHistory.complaint = request.POST.get('complaint')
+            userprofile=get_object_or_404(UserProfile,user=request.user)
+            
+            taskHistory.assignedby = userprofile
+            taskHistory.assigned = worker
+            taskHistory.Comments=" "
+            taskHistory.status = 'ONGOING'
+            #worker.no_of_jobs += 1
+            taskHistory.save()
+    # if request.method == 'POST':
+    #     cf = CommentForm(request.POST or None)
+    #     if cf.is_valid():
+    #         content = request.POST.get('content')
+    #         comment = Comment.objects.create(post = TaskHistory, user = request.user, content = content)
+    #         comment.save()
+    #         context ={
+    #         'comment_form':cf,
+            
+    #         # 'u':u
+    #         }
+    #         return redirect('detailed_task')
+
     
-class ProfileDetailView(FormMixin, DetailView):
-    model = WorkerProfile
+    return render(request, 'home/WorkerProfile_detail.html', context)
+
+class ProfileDetailView(DetailView):
+            model = WorkerProfile
+            template_name = 'WorkerProfile_detail.html'
+
+            def get_object(self, pk):
+                return get_object_or_404(WorkerProfile, pk=pk)
+     #I know pk=username is not correct. I am not sure what to put pk=? 
+            
+
+# class ProfileDetailView(FormMixin, DetailView):
+#     model = WorkerProfile
     # def detailedprofile(request):
         
         # if request.method == "POST":

@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <head>
     <title>
-        {{object.username}}'s profile
+        {{worker.worker.user.username}}'s profile
     </title>
 </head>
 <body>
     
     <ul>
-            <li>{{ object.username }}</li>
-            <li>{{ object.image }}</li>
-            <li>{{ object.Star }}</li>
-            <li>{{ object.biodata }}</li>
-            <li>{{ object.profession }}</li>
+            <li>{{ worker.worker.user.username }}</li>
+            <li><img class="img-fluid rounded-start" src="{{ worker.worker.image.url }}"></li>
+            <li>{{ request.user }}</li>
+            <li>{{ worker.star }}</li>
+            <li>{{ worker.biodata }}</li>
+            <li>{{ worker.profession }}</li>
     
     </ul>
+    <form method = "post">
+        {% csrf_token %}
+        title : <input type="text" name = "title"/>
+        complaint description :<input type = "text" name = "complaint"/>
+        
+        <input type = "submit" value = "Save" />
+    </form>
     
 </body>

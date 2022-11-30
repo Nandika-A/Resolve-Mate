@@ -88,7 +88,8 @@
           
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title"><a href="{% url 'profile-detail' profile.worker.user.id %}">{{ profile.worker.user.username }}</a></h5>
+              <h5 class="card-title"><a href="{% url 'profile-detail' profile.id %}">{{ profile.worker.user.username }}</a></h5>
+              <p class="card-text">{{ profile.id }}</p>
                   <p class="card-text">{{ profile.profession }}</p>
               <p class="card-text">{{ profile.biodata }}</p>
               <div class="star">
