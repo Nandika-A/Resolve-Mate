@@ -18,6 +18,7 @@ from .models import Comment, TaskHistory
 from user.models import CustomUser 
 from .decorators import admin_only
 #from .filters import UserProfileFilter
+from django.core.mail import send_mail
 from django.views.generic import (
     ListView,
     DetailView,
@@ -25,6 +26,11 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
+#html email
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+
+
 def home(request):
     return render(request, 'home/homepage.html')
 def about(request):
@@ -73,6 +79,7 @@ def profile_detail(request, pk):
     if request.method == "POST":
             taskHistory = TaskHistory()
             taskHistory.profession = worker.profession
+            w_email = worker.worker.user.email
             taskHistory.title = request.POST.get('title')
             taskHistory.complaint = request.POST.get('complaint')
             userprofile=get_object_or_404(UserProfile,user=request.user)
@@ -83,20 +90,12 @@ def profile_detail(request, pk):
             taskHistory.status = 'ONGOING'
             #worker.no_of_jobs += 1
             taskHistory.save()
-    # if request.method == 'POST':
-    #     cf = CommentForm(request.POST or None)
-    #     if cf.is_valid():
-    #         content = request.POST.get('content')
-    #         comment = Comment.objects.create(post = TaskHistory, user = request.user, content = content)
-    #         comment.save()
-    #         context ={
-    #         'comment_form':cf,
-            
-    #         # 'u':u
-    #         }
-    #         return redirect('detailed_task')
-
-    
+            send_mail(
+            'New Complaint lodged: Approve or reject task',
+            'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
+            'basicuser338@gmail.com',
+            [w_email],
+        )
     return render(request, 'home/WorkerProfile_detail.html', context)
 
 class ProfileDetailView(DetailView):
