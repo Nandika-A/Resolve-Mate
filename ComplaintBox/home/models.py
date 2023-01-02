@@ -25,11 +25,24 @@ class TaskHistory(models.Model):
      def __str__(self):
          #return self.title4es
          return self.title
-class Comment(models.Model):
-	complaint=models.ForeignKey(TaskHistory,on_delete=models.CASCADE,related_name='comments')
-	user=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
-	content=models.TextField()
-	timestamp=models.DateTimeField(auto_now_add=True)
+# class Comment(models.Model):
+# 	complaint=models.ForeignKey(TaskHistory,on_delete=models.CASCADE)
+# 	user=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
+# 	content=models.TextField()
+# 	timestamp=models.DateTimeField(auto_now_add=True)
 
-	def __str__(self):
-		return 'comment on {} by {}'.format(self.post.title,self.user.username)
+# 	def __str__(self):
+# 		return 'comment on {} by {}'.format(self.post.title,self.user.username)
+class Comment(models.Model):
+    task = models.ForeignKey(TaskHistory,on_delete=models.CASCADE,related_name='comments')
+    name = models.CharField(max_length=80,null=True)
+    email = models.EmailField(null=True)
+    body = models.TextField(null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['created_on']
+
+    def __str__(self):
+        return 'Comment {} by {}'.format(self.body, self.name)
