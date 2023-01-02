@@ -46,11 +46,6 @@ def logout(request):
     return redirect(reverse('user:login'))
     
 
-
-
-
-
-
 @login_required
 def profile(request):
     if request.user.is_authenticated:
