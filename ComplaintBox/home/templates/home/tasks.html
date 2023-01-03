@@ -44,7 +44,8 @@
 <div class="body-form">
   <div class="container">
     <h1 class="form-title">Complaint Form</h1>
-    <form action="#">
+    <form action="." method = "POST">
+      {% csrf_token %}
       <div class="main-form-info">
         <div class="input-box">
           <label for="">Worker Type:</label>

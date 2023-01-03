@@ -14,15 +14,3 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields =['content']
         
-'''      
-class AssignWorkerForm(forms.ModelForm):
-    class Meta:
-        model = TaskHistory
-        fields = ['assigned']
-        widgets = {
-            'assigned': forms.CheckboxSelectMultiple(attrs={'class': 'column-checkbox'})
-        }
-        labels = {
-            'assigned' : 'Worker'
-        }
-'''
