@@ -28,32 +28,36 @@
             </p>
         </article>
 
-<form method="POST">
-  {% csrf_token %}
-    {{ comment_form.as_p }}
-    <input type="submit" name="comment" class="btn btn-warning">
-  
-</form>    
 
 <div class="main-comment-section">
   {{ comments.count }} Comment{{ comments|pluralize }}
 </div>
-
 {% for comment in comments %}
-  <blockquote class="blockquote">
-    <p>{{ comment.content }}</p>
-    <footer class="blockquote-footer">
-      By <cite>{{ comment.user|capfirst }}
-      {% endfor %}
-        {% if task.assignedby.id == user.id %}
-          <a href="{% url 'complaint-comment' comment.id %}" style="color: #585858;"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
-        {% endif %}
-        {% if comment.user.id == user.id %}
-            {% if comment.user.id == task.assignedby.user.id %}
-            {% else %}
-            <a href="{% url 'complaint-comment' comment.id %}" style="color: #585858;"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
-            {% endif %}
-        {% endif %}
+<div class="comments" style="padding: 10px;">
+  <p class="font-weight-bold">
+    {{ comment.name }}
+    <span class=" text-muted font-weight-normal">
+      {{ comment.created_on }}
+    </span>
+  </p>
+  {{ comment.body | linebreaks }}
+</div>
+{% endfor %}
+<div class="card-body">
+  {% if new_comment %}
+  <div class="alert alert-success" role="alert">
+    Your comment is awaiting moderation
+  </div>
+  {% else %}
+  <h3>Leave a comment</h3>
+  <form method="post" style="margin-top: 1.3em;">
+    {{ comment_form.as_p }}
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+  </form>
+  {% endif %}
+</div>
+
         </cite> 
     </footer>
   </blockquote>

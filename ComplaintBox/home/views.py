@@ -162,32 +162,32 @@ def adminpage(request):
 
  
 def detailed_task(request, pk):
-   
+    task = get_object_or_404(TaskHistory, pk=pk)
+    comments = task.comments.filter(active=True)
+    new_comment = None
     if request.method == 'POST':
-        cf = CommentForm(request.POST or None)
-        if cf.is_valid():
-            content = request.POST.get('content')
-            comment = Comment.objects.create(post = TaskHistory, user = request.user, content = content)
-            comment.save()
-            context ={
-            'comment_form':cf,
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            # Assign the current post to the comment
+            new_comment.task = task
+            # Save the comment to the database
+            new_comment.save()
             
-            # 'u':u
-            }
-            return redirect('detailed_task')
 
     else:
-        cf = CommentForm()
-        task = get_object_or_404(TaskHistory, pk=pk)
+        comment_form = CommentForm()
+        #task = get_object_or_404(TaskHistory, pk=pk)
         # c=CustomUser.objects.get(email=user)
         
         # u=UserProfile.objects.get(user=c)
-        context ={
-            'comment_form':cf,
-            'task':task,
-            # 'u':u
-            }
-    return render(request, 'home/detailed_task.html', context)
+       
+    return render(request, 'home/detailed_task.html', {'task':task,
+                                            'comments': comments,
+                                           'new_comment': new_comment,
+                                           'comment_form': comment_form
+
+    })
     
     
 class ComplaintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
