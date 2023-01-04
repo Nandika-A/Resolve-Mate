@@ -8,15 +8,10 @@ class CommentForm(forms.ModelForm):
         fields = ('name', 'email', 'body')
 
 
-'''      
-class AssignWorkerForm(forms.ModelForm):
-    class Meta:
-        model = TaskHistory
-        fields = ['assigned']
-        widgets = {
-            'assigned': forms.CheckboxSelectMultiple(attrs={'class': 'column-checkbox'})
-        }
-        labels = {
-            'assigned' : 'Worker'
-        }
-'''
+NUMS= [
+    ('approve', 'approve'),
+    ('reject', 'reject'),
+
+    ]
+class CHOICES(forms.Form):
+    NUMS = forms.CharField(widget=forms.RadioSelect(choices=NUMS))

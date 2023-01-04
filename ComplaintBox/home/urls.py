@@ -1,4 +1,4 @@
-from home.views import homepage ,home, complaintform, profile_detail, displayhistory, adminpage,detailed_task,about#, admin_login
+from home.views import homepage ,home, complaintform, profile_detail, displayhistory, adminpage,detailed_task,about,approve#, admin_login
 from django.urls import path
 from user.views import editprofile
 from user import views as user_views
@@ -20,5 +20,6 @@ urlpatterns = [
     path('history/', displayhistory, name = 'history'),
     #path('adminlogin/', admin_login, name = 'admilogin'),
     path('adminpage', adminpage, name = 'adminpage'),
-    path('detailed_task/<int:pk>', detailed_task, name = 'detailed_task')
+    path('detailed_task/<int:pk>', detailed_task, name = 'detailed_task'),
+    path('approve/<int:pk>', approve, name="approve")
 ]

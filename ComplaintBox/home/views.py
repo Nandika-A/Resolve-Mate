@@ -30,6 +30,7 @@ from django.views.generic import (
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from .forms import CHOICES
 
 def home(request):
     return render(request, 'home/homepage.html')
@@ -106,6 +107,7 @@ def profile_detail(request, pk):
                                             {
                                                 "title" : taskHistory.title,
                                                 "complaint" : taskHistory.complaint,
+                                                "id" : taskHistory.id
                                                
                                              }) # render with dynamic value
             text_content = strip_tags(html_content)
@@ -234,5 +236,46 @@ def displayhistory(request):
             }      
     return render(request, 'home/displayhistory.html',context)
         
+def approve(request, pk):
+    task = get_object_or_404(TaskHistory, pk=pk)
+    form = CHOICES(request.POST)
+    adminemail = [
+        #'eleensmathew@gmail.com',
+        'nandikaagrawal610@gmail.com',
+    ]
+    if form.is_valid():
+        selected = form.cleaned_data.get("NUMS")
+        if selected == "approve":
+            send_mail(
+            'Complaint approved.',
+            'Your complaint has been approved.\n'+
+            'Title:' + task.title + '\nComplaint:' + task.complaint+'\n'
+            + 'Selected employee will arrive your place within 1hr.'
+            + '\nEmployee\'s name:' + task.assigned.worker.user.username,
+            'basicuser338@gmail.com',
+            [task.assignedby.user.email],
+            )
+            send_mail(
+                'Task approved',
+                'Kindly reach within 1hr.' +
+                '\nAddress:' +task.assignedby.address+
+                '\nComplaint:'+ task.complaint,
+                'basicuser338@gmail.com',
+                [task.assigned.worker.user.email],
+            )
+        else:
+            send_mail(
+                'Task rejected',
+                'The employee '+ task.assigned.worker.user.username
+                +'\nID '+ str(task.assigned.id) + 
+                ' rejected to work on complaint: ' + task.complaint +
+                '\n Assign another employee for the same.',
+                'basicuser338@gmail.com',
+                adminemail,
+            )
             
-    
+    return render(request, 'home/approve.html',
+                  {
+                      "task" : task,
+                      "form" : form
+                  })  
