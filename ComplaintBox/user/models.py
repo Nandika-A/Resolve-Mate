@@ -59,7 +59,7 @@ class UserProfile(models.Model):
     # )
     phone_no= models.CharField(default='0000',max_length=50)
     address = models.TextField(default = '0000')
-    star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
+    #star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
     # preference= JSONField(
     #     models.DecimalField(blank=True, validators=[
     #         MaxValueValidator(5)], decimal_places = 2, max_digits = 3),
@@ -81,8 +81,18 @@ class WorkerProfile(models.Model):
     worker =models.OneToOneField(UserProfile, null =True, on_delete=models.SET_NULL)
     profession = models.CharField(max_length=100, default=None)
     biodata = models.TextField(default = None)
-    star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
+    #star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
     #UPI = models.CharField(max_length=100, default=None)
 
     def __str__(self):
         return self.worker.user.username
+
+class Rating(models.Model):
+
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    Worker = models.ForeignKey(WorkerProfile, on_delete=models.CASCADE)
+    rating = models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
+    #star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
+
+    def __str__(self):
+        return f"{self.post.header}: {self.rating}"

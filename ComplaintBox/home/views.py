@@ -191,7 +191,18 @@ def detailed_task(request, pk):
 
     })
     
+def rate(request, pk, rating: int):
+    #post = Post.objects.get(id=post_id)
+    worker=TaskHistory.assigned.get(id=pk)
     
+    #Rating.objects.filter(post=post, user=request.user).delete()
+    Rating.objects.filter(Worker=worker,user=request.post).delete()
+
+    worker.rating_set.create(user=request.user, rating=rating)
+    #return index(request)
+    return detailed_task(request,pk)
+
+
 class ComplaintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskHistory
     fields = ['complaint','title']

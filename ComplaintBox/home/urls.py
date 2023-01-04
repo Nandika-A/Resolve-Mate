@@ -1,4 +1,4 @@
-from home.views import homepage ,home, complaintform, profile_detail, displayhistory, adminpage,detailed_task,about,approve#, admin_login
+from home.views import homepage ,home, complaintform, profile_detail, displayhistory, adminpage,detailed_task,about,approve,rate#, admin_login
 from django.urls import path
 from user.views import editprofile
 from user import views as user_views
@@ -17,6 +17,7 @@ urlpatterns = [
     path('editprofile',user_views.editprofile, name = 'editprofile'),
     path('<int:pk>/update/', ComplaintUpdateView.as_view(), name='complaint-update'),
     path('<int:pk>/delete/', DeleteComplaintView.as_view(), name='complaint-delete'),
+    path('<int:pk>/<int:rating>/',rate),
     path('history/', displayhistory, name = 'history'),
     #path('adminlogin/', admin_login, name = 'admilogin'),
     path('adminpage', adminpage, name = 'adminpage'),
