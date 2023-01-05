@@ -46,7 +46,7 @@ def homepage(request):
             l1+=[x[0]]
     if request.method == "GET":
         p = request.GET.get('w')
-        profiles = WorkerProfile.objects.filter(profession = p).order_by('-star')
+        profiles = WorkerProfile.objects.filter(profession = p)
     else:
         profiles =  WorkerProfile.objects.order_by('-star')
     context = {
@@ -88,7 +88,6 @@ def profile_detail(request, pk):
             taskHistory.assignedby = userprofile
             taskHistory.assigned = worker
             taskHistory.Comments=" "
-            taskHistory.status = 'ONGOING'
             #worker.no_of_jobs += 1
             taskHistory.save()
             
@@ -274,6 +273,7 @@ def approve(request, pk):
                 'basicuser338@gmail.com',
                 [task.assigned.worker.user.email],
             )
+            task.status = 'ONGOING'
         else:
             send_mail(
                 'Task rejected',
@@ -284,6 +284,7 @@ def approve(request, pk):
                 'basicuser338@gmail.com',
                 adminemail,
             )
+            task.assigned = None
             
     return render(request, 'home/approve.html',
                   {
