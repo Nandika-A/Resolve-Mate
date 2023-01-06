@@ -81,6 +81,7 @@ class WorkerProfile(models.Model):
     worker =models.OneToOneField(UserProfile, null =True, on_delete=models.SET_NULL)
     profession = models.CharField(max_length=100, default=None)
     biodata = models.TextField(default = None)
+    no_of_jobs = models.IntegerField(default=0)
     #star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
     #UPI = models.CharField(max_length=100, default=None)
 
