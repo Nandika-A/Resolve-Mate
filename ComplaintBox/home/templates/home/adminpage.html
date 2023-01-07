@@ -1,39 +1,34 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Admin page</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
 </head>
 <body>
-   <table>
-    <tr>
-        <td>Complaint</td>
-        <td>Assigned by</td>
-        <td>Preferences(if any)</td>
-        <td>Worker assigned</td>
-    </tr>
-    {% for task in tasks %}
-    <tr>
-        <td>{{ task.complaint }}</td>
-        <td>{{ task.assignedby }}</td>
-        {% if {{ pref }} %}
-        <td>{{ pref }}</td>
-        {% else %}
-        <td>---</td>
-        {% endif %}
-        <td>
-            <form action = '.' method = "POST">
-                {% csrf_token %}
-                    <ul>
-                        {% for w in worker %}
-                        <input type = "checkbox" name = "{{ w.workername }}"/>
-                        <li>Name : {{ w.workername_id }}</li>
-                        <li>Number of jobs assigned currently : {{ w.no_of_jobs }}</li>
-                        <li>Star rating : {{ w.Star_0 }}</li>
-                        <br>
-                        <br>
-                    </ul>
-                <input type = "submit" value = "Save" />
-            </form>
-        </td>
-    </tr>
-   </table>
+    <table>
+        <tr>
+            <td>Task ID</td>
+            <td>Date posted</td>
+            <td>Title</td>
+            <td>Complaint</td>
+            <td>Assigned by</td>
+            <td>Assign worker</td>
+        </tr>
+        {% for t in tasks %}
+        <tr>
+        <td>{{ t.id }}</td>
+        <td>{{ t.date_posted }}</td>
+        <td>{{ t.title }}</td>
+        <td>{{ t.complaint }}</td>
+        <td>{{ t.assignedby.user.username }}</td>
+        <td><a href="{% url 'taskpage' t.id %}">Visit</a></td>
+        </tr>
+        {% endfor %}
+        <tr>
+
+        </tr>
+    </table>
 </body>
+</html>

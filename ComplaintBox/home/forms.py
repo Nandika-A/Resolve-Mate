@@ -15,3 +15,5 @@ NUMS= [
     ]
 class CHOICES(forms.Form):
     NUMS = forms.CharField(widget=forms.RadioSelect(choices=NUMS))
+
+
