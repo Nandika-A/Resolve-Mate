@@ -304,7 +304,28 @@ def taskpage(request, pk):
     }
     if request.method == 'POST':
         work = request.POST.get('work')
-        task.assigned = work
+        # print(work)
+        task.assigned.worker.user.username = work
+        wemail = task.assigned.worker.user.email
         task.status='ASSIGNED'
+        task.assigned.no_of_jobs += 1
         task.save()
+        task.assigned.save()
+        send_mail(
+                'New task',
+                'Kindly reach within 1hr.' +
+                '\nAddress:' +task.assignedby.address+
+                '\nComplaint:'+ task.complaint,
+                'basicuser338@gmail.com',
+                [wemail],
+            )
+        send_mail(
+                'Worker assigned',
+                'Your complaint has been approved.\n'+
+                'Title:' + task.title + '\nComplaint:' + task.complaint+'\n'
+                + 'Selected employee will arrive your place within 1hr.'
+                + '\nEmployee\'s name: ' + task.assigned.worker.user.username,
+                'basicuser338@gmail.com',
+                [task.assignedby.user.email],
+            )
     return render(request, 'home/taskpage.html', context)
