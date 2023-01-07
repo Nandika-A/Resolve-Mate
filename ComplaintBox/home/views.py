@@ -79,6 +79,7 @@ def complaintform(request):
 
     return render(request, "home/tasks.html", context)
 
+
 def profile_detail(request, pk):
     worker = get_object_or_404(WorkerProfile, pk=pk)
     context ={
@@ -112,6 +113,7 @@ def profile_detail(request, pk):
             html_content = render_to_string('email_template.html'
                                             ,
                                             {
+                                                
                                                 "title" : taskHistory.title,
                                                 "complaint" : taskHistory.complaint,
                                                 "id" : taskHistory.id
@@ -168,7 +170,7 @@ def detailed_task(request, pk):
     task = get_object_or_404(TaskHistory, pk=pk)
     comments = task.comments.filter(active=True)
     new_comment = None
-    if request.method == 'POST':
+    if request.method == 'POST' and 'comment' in request.post:
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
@@ -176,8 +178,36 @@ def detailed_task(request, pk):
             new_comment.task = task
             # Save the comment to the database
             new_comment.save()
-            
-
+    elif request.method =='POST' and 'completed' in request.post:
+        task.status='COMPLETED'
+        task.save()
+        send_mail(
+            'Thank you for using our service',
+            'Please rate '+task.assigned.worker.user.username+'\n',
+            'basicuser338@gmail.com',
+            [request.user.email],
+            )
+        #sending mail to user
+        html_content = render_to_string('rating_template.html'
+                                            ,
+                                            {
+                                                "image" : task.assigned.worker.image
+                                                "username" : task.assigned.worker.user.username
+                                                "worker" : task.assigned
+                                                #"id" : taskHistory.id
+                                               
+                                             }) # render with dynamic value
+        text_content = strip_tags(html_content)
+        msg = EmailMultiAlternatives(
+                'New Complaint lodged, send your approval.',
+                'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
+                'basicuser338@gmail.com',
+                [w_email]
+                )
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+        
+        
     else:
         comment_form = CommentForm()
         #task = get_object_or_404(TaskHistory, pk=pk)
