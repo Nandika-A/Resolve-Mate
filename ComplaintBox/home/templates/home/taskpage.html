@@ -15,21 +15,15 @@
     User ID: {{ task.assignedby.user.id }}
     <br>
     <h4>Assign  worker for the task</h4>
-    <form action="/adminpage" method="POST">
+    <form method="POST">
         {% csrf_token %}
-        {% for w in worker %}
-            <input type="radio" name="{{ w }}" id="work" />
-            <br>
-            Name: {{ w.worker.user.username }}
-            <br>
-            Number of jobs assigned currently: {{ w.worker.no_of_jobs }}
-            <br>
-            Biodata: {{ w.worker.biodata }}
-            <br>
-            
-        {% endfor %}
-        <input type="submit" value="Save" />
-    </form>
-    
+        <select name="work">
+          <option value="" disabled selected>Assign worker</option>
+          {% for w in worker %}
+          <option value="{{ w }}">{{ w }}: {{ w.no_of_jobs }} jobs currently: {{ w.biodata }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">Save</button>
+      </form>
 </body>
 </html>
