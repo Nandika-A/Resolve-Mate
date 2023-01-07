@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'mjml',
     # 'allauth',
     # 'allauth.account',
     # 'allauth.socialaccount',
@@ -196,7 +196,9 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 LOGIN_REDIRECT_URL = 'homepage'
 LOGIN_URL = 'login'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
+#responsive email 
+MJML_BACKEND_MODE = "cmd"
+MJML_EXEC_CMD = "node_modules/.bin/mjml"
 # SITE_ID = 1
 # ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 # ACCOUNT_EMAIL_REQUIRED = True
