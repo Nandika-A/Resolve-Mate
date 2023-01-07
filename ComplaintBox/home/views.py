@@ -65,9 +65,17 @@ def complaintform(request):
     if request.method == "POST":
         taskHistory = TaskHistory()
         taskHistory.profession = request.POST.get('wtype')
+        taskHistory.title = request.POST.get('title')
         taskHistory.complaint = request.POST.get('complaint')
-        taskhistory.assigned_by = request.user.username
+        taskhistory.assigned_by = request.user
         taskHistory.save()
+        send_mail(
+            'Complaint lodged',
+            'Your complaint has been successfully lodged.\n'+
+            'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
+            'basicuser338@gmail.com',
+            [taskhistory.assigned_by.user.email],
+            )
 
     return render(request, "home/tasks.html", context)
 
@@ -147,19 +155,13 @@ class ProfileDetailView(DetailView):
 
 @admin_only            
 def adminpage(request):
-    tasks = TaskHistory.objects.order_by('date_posted').filter(status = 'PENDING')
-    pref = UserProfile.objects.filter(user_id = TaskHistory.assignedby.id).get('preference')
-    worker = WorkerProfile.objects.filter(profession = tasks.profession).order_by('no_of_jobs')
+    tasks = TaskHistory.objects.filter(status = 'PENDING').order_by('date_posted')
+    #pref = UserProfile.objects.filter(user_id = TaskHistory.assignedby.id).get('preference')
     context = {
         'tasks' : tasks,
-        'pref' : pref,
-        'worker' : worker
+        #'pref' : pref,
+        #'worker' : worker
     }
-    
-    if request.method == 'POST':
-        TaskHistory.assigned = request.POST.get('worker')
-        TaskHistory.status = 'ONGOING'
-        TaskHistory.save()
     return render(request, "home/adminpage.html", context)
         
 
@@ -303,7 +305,7 @@ def approve(request, pk):
                 'basicuser338@gmail.com',
                 [task.assigned.worker.user.email],
             )
-            task.status = 'ONGOING'
+            task.status='ONGOING'
         else:
             send_mail(
                 'Task rejected',
@@ -321,3 +323,18 @@ def approve(request, pk):
                       "task" : task,
                       "form" : form
                   })  
+
+  
+def taskpage(request, pk):
+    task = get_object_or_404(TaskHistory, pk=pk)
+    worker = WorkerProfile.objects.filter(profession=task.profession).order_by('no_of_jobs')
+    context = {
+        'task':task,
+        'worker':worker
+    }
+    if request.method == 'POST':
+        work = request.POST.get('work')
+        task.assigned = work
+        task.status='ASSIGNED'
+        task.save()
+    return render(request, 'home/taskpage.html', context)

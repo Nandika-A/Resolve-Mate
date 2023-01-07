@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task page</title>
+</head>
+<body>
+    <h2>Task {{ task.id }}</h2>
+    <h4>Title: {{ task.title }}</h4>
+    <h4>Complaint: {{ task.complaint }}</h4>
+    Assigned by: {{ task.assignedby.user.username }}
+    <br>
+    User ID: {{ task.assignedby.user.id }}
+    <br>
+    <h4>Assign  worker for the task</h4>
+    <form action="/adminpage" method="POST">
+        {% csrf_token %}
+        {% for w in worker %}
+            <input type="radio" name="{{ w }}" id="work" />
+            <br>
+            Name: {{ w.worker.user.username }}
+            <br>
+            Number of jobs assigned currently: {{ w.worker.no_of_jobs }}
+            <br>
+            Biodata: {{ w.worker.biodata }}
+            <br>
+            
+        {% endfor %}
+        <input type="submit" value="Save" />
+    </form>
+    
+</body>
+</html>
