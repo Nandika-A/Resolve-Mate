@@ -1,0 +1,10 @@
+.ratings_stars {
+    background: url('./imgr/star.png') no-repeat; 
+ }
+ 
+ .ratings_stars:hover {
+    background: url('./images/star_overs.png') no-repeat; 
+ }
+ .ratings_stars.selected {
+    background: url('./images/star_overs.png') no-repeat; 
+ }

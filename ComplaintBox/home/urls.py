@@ -17,11 +17,12 @@ urlpatterns = [
     path('editprofile',user_views.editprofile, name = 'editprofile'),
     path('<int:pk>/update/', ComplaintUpdateView.as_view(), name='complaint-update'),
     path('<int:pk>/delete/', DeleteComplaintView.as_view(), name='complaint-delete'),
-    path('<int:pk>/<int:rating>/',rate),
+    
     path('history/', displayhistory, name = 'history'),
     #path('adminlogin/', admin_login, name = 'admilogin'),
     path('adminpage', adminpage, name = 'adminpage'),
     path('detailed_task/<int:pk>', detailed_task, name = 'detailed_task'),
     path('approve/<int:pk>', approve, name="approve"),
+    path('rate/<int:pk>/', rate,name="rate"),
     path('taskpage/<int:pk>', taskpage, name='taskpage')
 ]

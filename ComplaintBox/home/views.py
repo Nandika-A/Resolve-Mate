@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth.models import User
+from django.db.models import Avg
 import logging
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -10,7 +11,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 #from asyncio import taskgroups
 from .models import TaskHistory
-from user.models import UserProfile, WorkerProfile
+from user.models import UserProfile, WorkerProfile,Rating
 from django.views.generic.edit import FormMixin
 from django.views.generic import DetailView
 from .forms import CommentForm
@@ -170,15 +171,15 @@ def detailed_task(request, pk):
     task = get_object_or_404(TaskHistory, pk=pk)
     comments = task.comments.filter(active=True)
     new_comment = None
-    # if request.method == 'POST' and 'comment' in request.post:
-    #     comment_form = CommentForm(data=request.POST)
-    #     if comment_form.is_valid():
-    #         new_comment = comment_form.save(commit=False)
-    #         # Assign the current post to the comment
-    #         new_comment.task = task
-    #         # Save the comment to the database
-    #         new_comment.save()
-    if request.method =='POST': #and 'completed' in request.post:
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            # Assign the current post to the comment
+            new_comment.task = task
+            # Save the comment to the database
+            new_comment.save()
+    if request.method =='GET': #and 'completed' in request.post:
         task.status='COMPLETED'
         task.save()
         send_mail(
@@ -194,6 +195,7 @@ def detailed_task(request, pk):
                                                 "image" : task,
                                                 "username" : task,
                                                 "worker" : task,
+                                                "task":task,
                                                 #"id" : taskHistory.id
                                                
                                              }) # render with dynamic value
@@ -222,16 +224,34 @@ def detailed_task(request, pk):
 
     })
     
-def rate(request, pk, rating: int):
+def rate(request, pk):
     #post = Post.objects.get(id=post_id)
-    worker=TaskHistory.assigned.get(id=pk)
+    rating=Rating()
+    worker=TaskHistory.objects.get(id=pk)
+    average=Rating.objects.filter(Worker=worker.assigned).aggregate(Avg('rating'))
+    user=worker.assignedby.user.id
+    checkrating=Rating.objects.filter(Worker=worker.assigned,user=user)
+    useremail=CustomUser.objects.filter(id=user)
+    if request.method == "POST":
+        ratingnum=request.POST.get('ratingnum')
     
-    #Rating.objects.filter(post=post, user=request.user).delete()
-    Rating.objects.filter(Worker=worker,user=request.post).delete()
+        checkrating.delete()
+        newrate=Rating()
+        newrate.user=useremail.first()
+        newrate.rating=ratingnum
+        newrate.Worker=worker.assigned
+        newrate.save()
 
-    worker.rating_set.create(user=request.user, rating=rating)
-    #return index(request)
-    return detailed_task(request,pk)
+    
+    return render(request, 'home/rating.html', {'worker':worker.assigned,
+                                                'user':user,
+                                             'average': average['rating__avg'],
+                                             'checkrating': checkrating.first,
+                                        #    'new_comment': new_comment,
+                                        #    'comment_form': comment_form
+
+    }
+    )
 
 
 class ComplaintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

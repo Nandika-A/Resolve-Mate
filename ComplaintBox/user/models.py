@@ -82,7 +82,9 @@ class WorkerProfile(models.Model):
     profession = models.CharField(max_length=100, default=None)
     biodata = models.TextField(default = None)
     no_of_jobs = models.IntegerField(default=0)
-    #star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
+    
+
+    #average_star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
     #UPI = models.CharField(max_length=100, default=None)
 
     def __str__(self):
@@ -96,4 +98,4 @@ class Rating(models.Model):
     #star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
 
     def __str__(self):
-        return f"{self.post.header}: {self.rating}"
+        return f"{self.Worker}: {self.rating}"
