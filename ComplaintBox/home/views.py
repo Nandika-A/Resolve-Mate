@@ -32,6 +32,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from .forms import CHOICES
+import random
 
 def home(request):
     return render(request, 'home/homepage.html')
@@ -379,3 +380,66 @@ def taskpage(request, pk):
                 [task.assignedby.user.email],
             )
     return render(request, 'home/taskpage.html', context)
+
+def automaticassign(request):
+    context = {}
+    if request.method == "POST":
+        taskHistory = TaskHistory()
+        taskHistory.profession = request.POST.get('wtype')
+        taskHistory.title = request.POST.get('title')
+        taskHistory.complaint = request.POST.get('complaint')
+        taskHistory.assigned_by = request.user
+        # taskHistory.save()
+        # send_mail(
+        #     'Complaint lodged',
+        #     'Your complaint has been successfully lodged.\n'+
+        #     'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
+        #     'basicuser338@gmail.com',
+        #     [taskhistory.assigned_by.user.email],
+        #     )
+        #workers = [str(elem) for elem in list(WorkerProfile.objects.filter(profession = taskHistory.profession).values_list('worker.user.username'))]
+        workers = WorkerProfile.objects.filter(profession = taskHistory.profession)
+        min = 100
+        selected = []
+        for w in workers:
+            if w.no_of_jobs <= min:
+                min = w.no_of_jobs
+                selected += [w]
+                
+        max = 0.00
+        maxrating = []
+        for s in selected:
+            getrating = Rating.objects.get(Worker = s)
+            if getrating.rating >= max:
+                max = getrating.rating
+                maxrating += [s]
+        length = len(maxrating)
+        
+        if length == 1:
+            Reqworker = maxrating[0]
+        else:
+            i = random.randint(0,length-1)
+            Reqworker = maxrating[i]
+        
+        taskHistory.assigned = Reqworker
+        taskHistory.assigned.no_of_jobs += 1
+        taskHistory.save()
+        taskHistory.assigned.save()
+        send_mail(
+                'New task',
+                'Kindly reach within 1hr.' +
+                '\nAddress:' +taskHistory.assignedby.address+
+                '\nComplaint:'+ taskHistory.complaint,
+                'basicuser338@gmail.com',
+                [taskHistory.assigned.worker.user.email],
+            )
+        send_mail(
+            'Complaint lodged',
+            'Your complaint has been successfully lodged.\n'+
+            'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n'
+            + 'Selected employee will arrive your place within 1hr.'
+                + '\nEmployee\'s name: ' + taskHistory.assigned.worker.user.username,
+            'basicuser338@gmail.com',
+            [taskhistory.assigned_by.user.email],
+            )
+    return render(request, "home/tasks.html", context)
