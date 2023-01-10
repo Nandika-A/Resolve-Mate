@@ -437,22 +437,20 @@ def automaticassign(request):
     return render(request, "home/tasks.html", context)
 
 def servicehistory(request):
-    # try:
-    #     tasks = TaskHistory.objects.get(assigned = request.user)
-    #     context = {
-    #         'tasks': tasks
-    #     }
-    #     return render(request, "home/services.html", context)
-    # except tasks.DoesNotExist:
-    #     return HttpResponse("No services offered yet!")
-    if request.user.is_authenticated:
+    try:
+        if request.user.is_authenticated:
+            user1=request.user
+            c=CustomUser.objects.get(email=user1)
+            u=UserProfile.objects.get(user=c)
+            w=WorkerProfile.objects.get(worker=u)
+            tasks = TaskHistory.objects.filter(assigned = w)
+            context = {
+                'tasks': tasks
+            }
+        return render(request, "home/services.html", context)
+            
+    except (WorkerProfile.DoesNotExist, TaskHistory.DoesNotExist) as e:
+        return HttpResponse("No services offered yet!")
+    
         
-        user1=request.user
-        c=CustomUser.objects.get(email=user1)
-        u=UserProfile.objects.get(user=c)
-        w=WorkerProfile.objects.get(worker=u)
-        tasks = TaskHistory.objects.filter(assigned = w)
-        context = {
-            'tasks': tasks
-        }
-    return render(request, "home/services.html", context)
+        
