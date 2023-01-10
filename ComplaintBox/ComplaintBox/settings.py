@@ -35,24 +35,44 @@ INSTALLED_APPS = [
     'user',
     'crispy_forms',
     'django.contrib.admin',
-    'django.contrib.auth',
+    
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.auth',
     
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     # 'allauth',
     # 'allauth.account',
     # 'allauth.socialaccount',
 # the social providers
     # 'allauth.socialaccount.providers.facebook',
-    # 'allauth.socialaccount.providers.google',
+     'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.twitter',
 
     'django_filters',
 ]
 
+SITE_ID = 1
 
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
+    }
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -83,10 +103,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ComplaintBox.wsgi.application'
 
-# AUTHENTICATION_BACKENDS = (
-#     'django.contrib.auth.backends.ModelBackend', # existing backend
-#     'allauth.account.auth_backends.AuthenticationBackend',
-# )
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # existing backend
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
