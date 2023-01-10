@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services offered</title>
+</head>
+<body>
+    <h2 class="account-heading">{{ request.user }}</h2>
+    <table>
+        <tr>
+            <td>Date posted</td>
+            <td>Title</td>
+            <td>Complaint</td>
+            <td>User</td>
+            <td>Status</td>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            
+            <tr>
+                
+                <td><a href = "{% url 'detailed_task' pk=task.id %}">{{ task.date_posted }}</a></td>
+                <td><a href = "{% url 'detailed_task' pk=task.id %}">{{ task.title }}</a></td>
+            <td><a href = "{% url 'detailed_task' pk=task.id %}">{{ task.complaint }}</a></td>
+            <td><a href = "{% url 'detailed_task' pk=task.id %}">{{ task.assignedby.user.username}}</a></td>
+            <td><a href = "{% url 'detailed_task' pk=task.id %}">{{ task.status }}</a></td>
+            </tr>
+            
+            
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>
