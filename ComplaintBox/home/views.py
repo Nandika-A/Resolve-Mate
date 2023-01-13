@@ -447,16 +447,17 @@ def automaticassign(request):
             [taskhistory.assigned_by.user.email],
             )
     return render(request, "home/tasks.html", context)
-def checkout(request):
+def checkout(request,pk):
     if request.method=="POST":
-        items_json = request.POST.get('itemsJson', '')
+        task=TaskHistory.objects.get(id=pk)
+        #items_json = request.POST.get('itemsJson', '')
         name = request.POST.get('name', '')
         amount = request.POST.get('amount', '')
         email = request.POST.get('email', '')
-        address = request.POST.get('address1', '') + " " + request.POST.get('address2', '')
-        city = request.POST.get('city', '')
-        state = request.POST.get('state', '')
-        zip_code = request.POST.get('zip_code', '')
+        #address = request.POST.get('address1', '') + " " + request.POST.get('address2', '')
+        #city = request.POST.get('city', '')
+        #state = request.POST.get('state', '')
+        #zip_code = request.POST.get('zip_code', '')
         phone = request.POST.get('phone', '')
         # order = Orders(items_json=items_json, name=name, email=email, address=address, city=city,
         #                state=state, zip_code=zip_code, phone=phone, amount=amount)
@@ -464,16 +465,16 @@ def checkout(request):
         # update = OrderUpdate(order_id=order.order_id, update_desc="The order has been placed")
         # update.save()
         thank = True
-        id = order.order_id
+        #id = order.order_id
         # return render(request, 'shop/checkout.html', {'thank':thank, 'id': id})
         # Request paytm to transfer the amount to your account after payment by user
         param_dict = {
 
-                'MID': 'Your-Merchant-Id-Here',
-                'ORDER_ID': str(order.order_id),
+                'MID': '',
+                'ORDER_ID': str(pk),
                 'TXN_AMOUNT': str(amount),
                 'CUST_ID': email,
-                'INDUSTRY_TYPE_ID': 'Retail',
+                'INDUSTRY_TYPE_ID': 'Service',
                 'WEBSITE': 'WEBSTAGING',
                 'CHANNEL_ID': 'WEB',
                 'CALLBACK_URL':'http://127.0.0.1:8000/handlerequest/',
@@ -488,4 +489,17 @@ def checkout(request):
 @csrf_exempt
 def handlerequest(request):
     #paytm will send post request
+    form=request.POST
+    for i in form.keys():
+        response_dict[i]=form[i]
+        if i=='CHECKSUMHASH':
+            checksum=form[i]
+    veirfy=Checksum.verify_checksum(response_dict,MERCHANT_KEY,checksum)
+    if verify:
+        if response_dict['RESPCODE']=='01':
+            print('order successful')
+        else:
+            print ('order was not successfull because '+ response_dict['RESPMSG'])
+
+    return render (request,'paymentstatus.html',{'response':response_dict})
     pass
