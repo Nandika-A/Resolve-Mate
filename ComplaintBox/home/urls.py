@@ -25,6 +25,6 @@ urlpatterns = [
     path('approve/<int:pk>', approve, name="approve"),
     path('rate/<int:pk>/', rate,name="rate"),
     path('taskpage/<int:pk>', taskpage, name='taskpage'),
-    path('automaticassign/', automaticassign, name='automaticassign')
+    path('automaticassign/', automaticassign, name='automaticassign'),
     path('handlerequest',handlerequest,name='handlerequest')
 ]

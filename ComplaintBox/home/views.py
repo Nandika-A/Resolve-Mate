@@ -35,7 +35,7 @@ from .forms import CHOICES
 import random
 #PayTm gateway
 from django.views.decorators.csrf import csrf_exempt
-from PayTm import Checksum
+
 
 
 def home(request):
