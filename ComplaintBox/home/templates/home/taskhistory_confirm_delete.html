@@ -1,24 +1,44 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'confirm_style.css' %}">
+    <link rel="stylesheet" href="https://kit.fontawesome.com/aa93c3b091.css" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/aa93c3b091.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body>
+    <div class="container">
     <div class="content-section">
+        <div class="icon">
+            <i class="fa-regular fa-circle-xmark"></i>
+        </div>
         <form method="POST">
             {% csrf_token %}
-            <fieldset class="form-group">
+            <div class="content">
+            <fieldset class="form-group rem-border">
                 <legend class="border-bottom mb-4">Delete Complaint</legend>
-                <h2>Are you sure you want to delete the complaint "{{ object.title }}"</h2>
+                <!-- <h2>Are you sure you want to delete the complaint "{{ object.title }}"</h2> -->
+                <div class="content-heading">
+                    <h2>Are you sure?</h2>
+                </div>
+                <div class="content">
+                    Do you really want to delete the complaint?"{{ object.title }}" <br> This process cannot be undone.
+                </div>
             </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-danger" type="submit">Delete</button>
-                <a class="btn btn-outline-secondary" href="{% url 'detailed_task' object.id %}">Cancel</a>
+            </div>
+            <div class="form-group buttons">
+                <!-- <a class="btn btn-outline-secondary" href="{% url 'detailed_task' object.id %}">Cancel</a> -->
+                <button class="btn btn-secondary"><a href="{% url 'detailed_task' object.id %">Cancel</a></button>
+                <!-- <button class="btn btn-outline-danger" type="submit">Delete</button> -->
+                <button class="btn btn-danger" type="su
+                ">Yes,Delete</button>
             </div>
         </form>
+    </div>
     </div>
 </body>
 </html>

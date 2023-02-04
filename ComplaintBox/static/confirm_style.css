@@ -1,0 +1,114 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    /* flex-direction: column; */
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+
+    background-color: gray;
+    font-family: 'Varela Round', sans-serif;
+}
+
+.container{
+    background-color: white;
+    padding: 24px;
+    /* max-height: 55%; */
+    min-width: 50px;
+    position: absolute;
+    top: 30px;
+    border: 1px solid gray;
+    border-radius: 14px;
+}
+
+.icon{
+    height: 86px;
+    width: 104px;
+    text-align: center;
+    margin: 22px auto;
+}
+
+.icon i{
+    margin: auto;
+    font-size: 75px;
+    color: #e90707;
+}
+
+.rem-border{
+    border: none;
+}
+
+.content{
+    color: #999;
+    font-size: 18px;
+    margin-bottom: 57px;
+    text-align: center;
+}
+
+.content-heading{
+    color: gray;
+    text-align: center;
+}
+
+.buttons{
+    text-align: center;
+}
+
+
+ .btn, .btn:active {
+    font-size: 20px;
+        color: #fff;
+        border-radius: 4px;
+        background: #60c7c1;
+        text-decoration: none;
+        transition: all 0.4s;
+        line-height: normal;
+        min-width: 138px;
+        border: none;
+        min-height: 42px;
+        border-radius: 3px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+     .btn-secondary {
+        background: #c1c1c1;
+    }
+    .btn-secondary a{
+        text-decoration: none;
+        color: white;
+    }
+
+ .btn-secondary:hover,
+      .btn-secondary:focus {
+        background: #a8a8a8;
+    }
+
+      .btn-danger {
+        background: #f15e5e;
+    }
+
+      .btn-danger:hover,
+      .btn-danger:focus {
+        background: #ee3535;
+    }
+
+
+    @media only screen and (max-width: 470px) {
+        .btn{
+            margin: 10px 0px;
+        }
+    }
+
+    /* @media only screen and (max-width:321px){
+        .content{
+            margin-bottom: 38px;
+        }
+    } */
