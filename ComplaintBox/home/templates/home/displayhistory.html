@@ -1,36 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tasks History</title>
 </head>
+
+<style>
+    *{
+    font-family: sans-serif;
+    }
+
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .center{
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    body div{
+        margin: 51px;
+    }
+    .content-table {
+        border-collapse: collapse;
+        margin: 25px;
+        font-size: 20px;
+        min-width: 500px;
+        border-radius: 18px 18px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 51px rgb(0 0 0 / 25%)
+    }
+
+    .content-table thead tr {
+        text-align: left;
+        background-color: #009879;
+        color: white;
+    }
+
+    .content-table th,
+    .content-table td {
+        padding: 15px 20px;
+    }
+
+    .content-table tbody tr {
+        border-bottom: 1px solid gray;
+    }
+
+    .content-table tr:nth-of-type(even){
+        background-color: #80808040;
+    }
+
+    .content-table tr:last-of-type {
+        border-bottom: 2px solid #009879;
+    }
+
+    .content-table tbody td a{
+        text-decoration: none;
+        cursor: pointer;
+        color: black;
+    }
+
+    .underline{
+        text-decoration: underline;
+    }
+</style>
+
 <body>
     <div>
-        <h2 class="account-heading">{{ request.user }}</h2>
-        <table>
-            <tr>
-                <td>Date posted</td>
-                <td>Complaint</td>
-                <td>Worker assigned</td>
-                <td>Status</td>
-            </tr>
-            {% for task in tasks %}
-            <tr>
-                
+        <h2 class="account-heading center">User- {{ request.user }}</h2>
+        <table class="content-table">
+            <thead>
                 <tr>
-                    
-                    <td><a href = "{% url 'detailed_task' pk=task.id %}">{{ task.date_posted }}</a></td>
-                <td><a href = "{% url 'detailed_task' pk=task.id %}">{{ task.complaint }}</a></td>
-                <td><a href = "{% url 'detailed_task' pk=task.id %}">{{ task.assigned.worker.user.username}}</a></td>
-                <td><a href = "{% url 'detailed_task' pk=task.id %}">{{ task.status }}</a></td>
+                    <th>Date posted</th>
+                    <th>Complaint</th>
+                    <th>Worker assigned</th>
+                    <th>Status</th>
                 </tr>
-                
-                
-            </tr>
-            {% endfor %}
+            </thead>
+
+            <tbody>
+
+                {% for task in tasks %}
+                <tr>
+
+                <!-- <tr> -->
+
+                    <td><a href="{% url 'detailed_task' pk=task.id %}">{{ task.date_posted }}</a></td>
+                    <td><a href="{% url 'detailed_task' pk=task.id %}">{{ task.complaint }}</a></td>
+                    <td><a href="{% url 'detailed_task' pk=task.id %}">{{ task.assigned.worker.user.username}}</a></td>
+                    <td class="underline"><a href="{% url 'detailed_task' pk=task.id %}">{{ task.status }}</a></td>
+                </tr>
+
+
+                <!-- </tr> -->
+                {% endfor %}
+            </tbody>
         </table>
     </div>
 </body>
+
 </html>
