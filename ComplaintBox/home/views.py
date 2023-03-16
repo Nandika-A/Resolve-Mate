@@ -73,14 +73,14 @@ def complaintform(request):
         taskHistory.profession = request.POST.get('wtype')
         taskHistory.title = request.POST.get('title')
         taskHistory.complaint = request.POST.get('complaint')
-        taskhistory.assigned_by = request.user
+        taskHistory.assigned_by = request.user
         taskHistory.save()
         send_mail(
             'Complaint lodged',
             'Your complaint has been successfully lodged.\n'+
             'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
             'basicuser338@gmail.com',
-            [taskhistory.assigned_by.user.email],
+            [taskHistory.assigned_by.user.email],
             )
 
     return render(request, "home/tasks.html", context)
@@ -107,33 +107,33 @@ def profile_detail(request, pk):
             taskHistory.save()
             
             # sending email to user after lodging complaint
-            send_mail(
-            'New Complaint lodged',
-            'Your complaint has been successfully lodged. Kindly wait for approval.\n'+
-            'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
-            'basicuser338@gmail.com',
-            [userprofile.user.email],
-            )
+            # send_mail(
+            # 'New Complaint lodged',
+            # 'Your complaint has been successfully lodged. Kindly wait for approval.\n'+
+            # 'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
+            # 'basicuser338@gmail.com',
+            # [userprofile.user.email],
+            # )
             
-            # sending approval email to worker
-            html_content = render_to_string('email_template.html'
-                                            ,
-                                            {
+            # # sending approval email to worker
+            # html_content = render_to_string('email_template.html'
+            #                                 ,
+            #                                 {
                                                 
-                                                "title" : taskHistory.title,
-                                                "complaint" : taskHistory.complaint,
-                                                "id" : taskHistory.id
+            #                                     "title" : taskHistory.title,
+            #                                     "complaint" : taskHistory.complaint,
+            #                                     "id" : taskHistory.id
                                                
-                                             }) # render with dynamic value
-            text_content = strip_tags(html_content)
-            msg = EmailMultiAlternatives(
-                'New Complaint lodged, send your approval.',
-                'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
-                'basicuser338@gmail.com',
-                [w_email]
-                )
-            msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            #                                  }) # render with dynamic value
+            # text_content = strip_tags(html_content)
+            # msg = EmailMultiAlternatives(
+            #     'New Complaint lodged, send your approval.',
+            #     'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
+            #     'basicuser338@gmail.com',
+            #     [w_email]
+            #     )
+            # msg.attach_alternative(html_content, "text/html")
+            # msg.send()
 
     return render(request, 'home/WorkerProfile_detail.html', context)
 
@@ -187,32 +187,32 @@ def detailed_task(request, pk):
     if request.method =='GET': #and 'completed' in request.post:
         task.status='COMPLETED'
         task.save()
-        send_mail(
-            'Thank you for using our service',
-            'Please rate '+task.assigned.worker.user.username+'\n',
-            'basicuser338@gmail.com',
-            [request.user.email],
-            )
-        #sending mail to user
-        html_content = render_to_string('rating_template.html'
-                                            ,
-                                            {
-                                                "image" : task,
-                                                "username" : task,
-                                                "worker" : task,
-                                                "task":task,
-                                                #"id" : taskHistory.id
+        # send_mail(
+        #     'Thank you for using our service',
+        #     'Please rate '+task.assigned.worker.user.username+'\n',
+        #     'basicuser338@gmail.com',
+        #     [request.user.email],
+        #     )
+        # #sending mail to user
+        # html_content = render_to_string('rating_template.html'
+        #                                     ,
+        #                                     {
+        #                                         "image" : task,
+        #                                         "username" : task,
+        #                                         "worker" : task,
+        #                                         "task":task,
+        #                                         #"id" : taskHistory.id
                                                
-                                             }) # render with dynamic value
-        text_content = strip_tags(html_content)
-        msg = EmailMultiAlternatives(
-                'Thank you for using our service, please rate us!.',
-                'Title:' + task.title +'\n',
-                'basicuser338@gmail.com',
-                [request.user.email]
-                )
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
+        #                                      }) # render with dynamic value
+        # text_content = strip_tags(html_content)
+        # msg = EmailMultiAlternatives(
+        #         'Thank you for using our service, please rate us!.',
+        #         'Title:' + task.title +'\n',
+        #         'basicuser338@gmail.com',
+        #         [request.user.email]
+        #         )
+        # msg.attach_alternative(html_content, "text/html")
+        # msg.send()
         
         
     else:
@@ -319,7 +319,7 @@ def approve(request, pk):
             'Title:' + task.title + '\nComplaint:' + task.complaint+'\n'
             + 'Selected employee will arrive your place within 1hr.'
             + '\nEmployee\'s name:' + task.assigned.worker.user.username,
-            'basicuser338@gmail.com',
+            '@gmail.com',
             [task.assignedby.user.email],
             )
             send_mail(

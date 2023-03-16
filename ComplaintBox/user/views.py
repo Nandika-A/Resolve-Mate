@@ -12,6 +12,7 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
             django_login(request, user)
             return redirect('home')
     else:
@@ -20,7 +21,7 @@ def signup(request):
     return render(request, 'user/signup.html', {'form': form})
 
 
-def login(request):
+def login(request, user):
     error = False
     if request.user.is_authenticated:
         return redirect('home')

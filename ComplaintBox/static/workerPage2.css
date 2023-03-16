@@ -1,0 +1,20 @@
+.sel-front{
+    padding: 14px;
+    border: 2px solid black;
+    border-radius: 18px;
+    margin: 7px;
+}
+
+.app{
+    margin: 9px auto;
+    display: block;
+    padding: 6px 12px;
+    border: 2px solid black;
+    border-radius: 13px;
+}
+
+.app:hover{
+    cursor: pointer;
+    background-color: antiquewhite;
+    transition: 0.5s;
+}

@@ -41,15 +41,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-# the social providers
+    #'allauth',
+    #'allauth.account',
+    #'allauth.socialaccount',
+    # the social providers
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.twitter',
 
     'django_filters',
+    'widget_tweaks',
 ]
 
 
