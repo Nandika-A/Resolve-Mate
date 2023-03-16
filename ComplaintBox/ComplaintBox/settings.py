@@ -35,25 +35,51 @@ INSTALLED_APPS = [
     'user',
     'crispy_forms',
     'django.contrib.admin',
-    'django.contrib.auth',
+    
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.auth',
     
+<<<<<<< HEAD
     #'allauth',
     #'allauth.account',
     #'allauth.socialaccount',
+=======
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+>>>>>>> profile-test
     # the social providers
     # 'allauth.socialaccount.providers.facebook',
-    # 'allauth.socialaccount.providers.google',
+    #'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.twitter',
 
     'django_filters',
     'widget_tweaks',
 ]
 
+SITE_ID = 1
 
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '707867663689-a0sl4ja1ddvcct59sm4dp1fn1isemda1.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -84,10 +110,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ComplaintBox.wsgi.application'
 
-# AUTHENTICATION_BACKENDS = (
-#     'django.contrib.auth.backends.ModelBackend', # existing backend
-#     'allauth.account.auth_backends.AuthenticationBackend',
-# )
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # existing backend
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
