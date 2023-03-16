@@ -89,11 +89,12 @@
                             </table>
                         </div>
                     </div>
+
                     {% if w.profession %}
                     <div style="height: 26px"></div>
                     <div class="card shadow-sm">
                         <div class="card-header bg-transparent border-0">
-                            <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Worker Information: <a href="{% url 'editprofile'%}"> <i class="pencil fa-solid fa-pencil"></i> </a> </h3>
+                            <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Worker Information: <a href="{% url 'user:editworkerprofile'%}"> <i class="pencil fa-solid fa-pencil"></i> </a> </h3>
                         </div>
                         <div class="card-body pt-0">
                             <table class="table table-bordered">
@@ -115,6 +116,9 @@
                             </table>
                         </div>
                     </div>
+                    
+                    {% else %}
+                    <button><a href = "{% url 'user:editworkerprofile'%}">Join as worker</a></button>
                     {% endif %}
 
 

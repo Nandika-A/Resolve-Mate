@@ -34,6 +34,10 @@ from django.utils.html import strip_tags
 from .forms import CHOICES
 import random
 
+#automatic assigning
+from queue import PriorityQueue
+
+
 def home(request):
     return render(request, 'home/homepage.html')
 def about(request):
@@ -388,35 +392,51 @@ def automaticassign(request):
         taskHistory.profession = request.POST.get('wtype')
         taskHistory.title = request.POST.get('title')
         taskHistory.complaint = request.POST.get('complaint')
-        taskHistory.assigned_by = request.user
-        #workers = [str(elem) for elem in list(WorkerProfile.objects.filter(profession = taskHistory.profession).values_list('worker.user.username'))]
-        workers = WorkerProfile.objects.filter(profession = taskHistory.profession)
-        min = 100
-        selected = []
-        for w in workers:
-            if w.no_of_jobs <= min:
-                min = w.no_of_jobs
-                selected += [w]
+        userprofile=get_object_or_404(UserProfile,user=request.user)
+        taskHistory.assignedby = userprofile
+        # #workers = [str(elem) for elem in list(WorkerProfile.objects.filter(profession = taskHistory.profession).values_list('worker.user.username'))]
+        # workers = WorkerProfile.objects.filter(profession = taskHistory.profession)
+        # min = 100
+        # selected = []
+        # for w in workers:
+        #     if w.no_of_jobs <= min:
+        #         min = w.no_of_jobs
+        #         selected += [w]
                 
-        max = 0.00
-        maxrating = []
-        for s in selected:
-            getrating = Rating.objects.get(Worker = s)
-            if getrating.rating >= max:
-                max = getrating.rating
-                maxrating += [s]
-        length = len(maxrating)
+        # max = 0.00
+        # maxrating = []
+        # for s in selected:
+        #     getrating = Rating.objects.get(Worker = s)
+        #     if getrating.rating >= max:
+        #         max = getrating.rating
+        #         maxrating += [s]
+        # length = len(maxrating)
         
-        if length == 1:
-            Reqworker = maxrating[0]
-        else:
-            i = random.randint(0,length-1)
-            Reqworker = maxrating[i]
+        # if length == 1:
+        #     Reqworker = maxrating[0]
+        # else:
+        #     i = random.randint(0,length-1)
+        #     Reqworker = maxrating[i]
         
-        taskHistory.assigned = Reqworker
+        # taskHistory.assigned = Reqworker
+        # taskHistory.assigned.no_of_jobs += 1
+        # taskHistory.save()
+        # taskHistory.assigned.save()
+        
+        q = PriorityQueue()
+        workers = WorkerProfile.objects.filter(profession = taskHistory.profession)
+        for w in workers:
+            getrating = Rating.objects.get(Worker = w)
+            hfw = getrating.rating/2 - w.no_of_jobs
+            q.put((hfw, w))
+        first = q.get()
+        obj = first[1]
+        taskHistory.assigned = obj
         taskHistory.assigned.no_of_jobs += 1
+        taskHistory.Comments = " "
         taskHistory.save()
         taskHistory.assigned.save()
+        taskHistory.assignedby.save()
         send_mail(
                 'New task',
                 'Kindly reach within 1hr.' +
@@ -434,7 +454,7 @@ def automaticassign(request):
             'basicuser338@gmail.com',
             [taskhistory.assigned_by.user.email],
             )
-    return render(request, "home/tasks.html", context)
+    return render(request, "home/automatic.html", context)
 
 def servicehistory(request):
     try:

@@ -12,6 +12,7 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
             django_login(request, user)
             return redirect('home')
     else:
@@ -21,6 +22,7 @@ def signup(request):
 
 
 def login(request):
+    
     error = False
     if request.user.is_authenticated:
         return redirect('home')
@@ -75,7 +77,8 @@ def editprofile(request):
         if user_form.is_valid():
             
           user_form.save()
-        
+          return redirect(reverse('user:profile'))
+    
         # if worker_form.is_valid():
         #     user=request.user.email
         #     c=CustomUser.objects.get(email=user)
@@ -83,9 +86,7 @@ def editprofile(request):
 
         #     worker1=worker_form.save()
         #     worker1.worker=WorkerProfile.objects.get(worker=u)
-        #     worker1.save()
-
-            #return redirect('profile')
+        #     worker1.save()           
 
         
     else:
@@ -94,3 +95,34 @@ def editprofile(request):
         #worker_form=UpdateWorkerForm(instance=request.user)
     #return render(request, 'user/editprofile.html', {'user_form': user_form, 'profile_form': profile_form, 'worker_form' : worker_form})
     return render(request, 'user/editprofile.html', {'user_form': user_form})
+
+def editworkerprofile(request):
+    if request.method == 'POST':
+        
+        
+        worker_form=UpdateWorkerForm(request.POST,instance=request.user ) #check if .profile should be there
+        
+        
+        
+        
+        if worker_form.is_valid():
+            user=request.user.email
+            c=CustomUser.objects.get(email=user)
+            u=UserProfile.objects.get(user=c)
+            worker1 = WorkerProfile()
+            worker_form.save()
+            worker1.worker=u 
+            worker1.biodata=worker_form.cleaned_data.get("biodata")
+            worker1.profession=worker_form.cleaned_data.get("profession")
+
+            worker1.save()
+
+            return redirect('home')
+
+        
+    else:
+        #user_form = UpdateUserForm(instance=request.user)
+        #profile_form = UpdateProfileForm(instance=request.user)
+        worker_form=UpdateWorkerForm(instance=request.user)
+    #return render(request, 'user/editprofile.html', {'user_form': user_form, 'profile_form': profile_form, 'worker_form' : worker_form})
+    return render(request, 'user/editworkerprofile.html', {'worker_form': worker_form})
