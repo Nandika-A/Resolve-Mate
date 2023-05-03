@@ -21,7 +21,7 @@ def signup(request):
     return render(request, 'user/signup.html', {'form': form})
 
 
-def login(request, user):
+def login(request):
     error = False
     if request.user.is_authenticated:
         return redirect('home')

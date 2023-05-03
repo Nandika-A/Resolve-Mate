@@ -42,11 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.auth',
     
-<<<<<<< HEAD
-    #'allauth',
-    #'allauth.account',
-    #'allauth.socialaccount',
-=======
     'django.contrib.sites',
 
     'allauth',
@@ -55,7 +50,6 @@ INSTALLED_APPS = [
     # 'allauth',
     # 'allauth.account',
     # 'allauth.socialaccount',
->>>>>>> profile-test
     # the social providers
     # 'allauth.socialaccount.providers.facebook',
     #'allauth.socialaccount.providers.google',
