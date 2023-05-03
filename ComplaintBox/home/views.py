@@ -39,31 +39,31 @@ from queue import PriorityQueue
 
 
 def home(request):
-    return render(request, 'home/homepage.html')
+    return render(request, 'home/home.html')
 def about(request):
     return render(request, 'home/about.html')
 
-def homepage(request):
+def workerslist(request):
     
     professionfilter = WorkerProfile.objects.values_list('profession')
-    l1=[]
-    for x in professionfilter:
-        if x[0] not in l1:
-            l1+=[x[0]]
+    list1=[]
+    for profession_received in professionfilter:
+        if profession_received[0] not in list1:
+            list1+=[profession_received[0]]
     if request.method == "GET":
-        p = request.GET.get('w')
-        profiles = WorkerProfile.objects.filter(profession = p)
+        profession = request.GET.get('worker')
+        profiles = WorkerProfile.objects.filter(profession = profession)
     else:
         profiles =  WorkerProfile.objects.order_by('-star')
     context = {
         'professionfilter' : professionfilter,
         'profiles' : profiles,
-        'l1':l1
+        'list1':list1
     }
     if profiles.count==0:
-        return render(request, "home/home.html")
+        return render(request, "home/workerslist.html")
 
-    return render(request, "home/home.html", context)    
+    return render(request, "home/workerslist.html", context)    
     
 
 def complaintform(request):
@@ -454,6 +454,6 @@ def automaticassign(request):
             + 'Selected employee will arrive your place within 1hr.'
                 + '\nEmployee\'s name: ' + taskHistory.assigned.worker.user.username,
             'basicuser338@gmail.com',
-            [taskhistory.assigned_by.user.email],
+            [taskHistory.assigned_by.user.email],
             )
     return render(request, "home/tasks.html", context)
