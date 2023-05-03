@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="{% static 'workerPage.css' %}">
+  <link rel="stylesheet" href="{% static 'workerPage2.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{% static 'workerPageResp.css' %}">
+
+</head>
+
+<body>
+  <nav class="navbarm bgm h-nav-resp">
+    <ul class="nav-listm vis-nav-resp">
+      <div class="logom">
+        <img src="{%static 'imgs2/homepageLogo.png'%}" alt="Logo">
+      </div>
+        <li> <a href="{% url 'home' %}">Home</a> </li>
+        <li> <a href="{% url 'about' %}">About</a> </li>
+        <li> <a href="#services">Services</a> </li>
+        <li> <a href="#contact">Contact Us</a> </li> href="#contact">Contact Us</a> </li>
+    </ul>
+    <div class="right-nav vis-nav-resp">
+      {% if user.is_authenticated %}
+          <button class="btnm"><a href="{% url 'user:profile' %}">Profile</a></button>
+          <button class="btnm"><a href="{% url 'user:logout' %}">Logout</a></button>
+      {% else %}
+          <a class="nav-item nav-link" href="{% url 'user:login' %}">Login</a>
+          <a class="nav-item nav-link" href="{% url 'user:signup' %}">Register</a>
+      {% endif %}
+
+    </div>
+
+    <div class="burger">
+      <div class="lineb"></div>
+      <div class="lineb"></div>
+      <div class="lineb"></div>
+    </div>
+  </nav>
+  <!--nav bar till now-->
+  <div class="section">
+    <div class="section-left">
+      <!--h3>Choose Profession</h3>
+            <form action="">
+            <div class="inputcheck">
+                <input type="checkbox" name="" id="plum">
+                <span> <label for="plum"> Plumber </label></span>
+            </div>
+            <div class="inputcheck">
+                <input type="checkbox" name="" id="carp">
+                <span> <label for="carp"> Carpentar </label></span>
+            </div>
+            <div class="inputcheck">
+                <input type="checkbox" name="" id="elect">
+                <span> <label for="elect"> Electrician </label> </span>
+            </div>
+            </form-->
+
+
+      <form method="GET">
+        {% csrf_token %}
+        <select name="worker" class="sel-front">
+          <option value="" disabled selected>Select worker's profession</option>
+          {% for pf in list1 %}
+          <option value="{{ pf }}">{{ pf}}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="app">Apply</button>
+      </form>
+    </div>
+
+
+    <!--filter till now-->
+
+    <div class="section-right overflow-auto">
+      {% for profile in profiles %}
+      <div class="card mb-4 overflow-auto" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img class="img-fluid rounded-start" src="{{ profile.worker.image.url }}">
+
+          </div>
+
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"><a href="{% url 'profile-detail' profile.id %}">{{ profile.worker.user.username }}</a></h5>
+              <p class="card-text">{{ profile.id }}</p>
+                  <p class="card-text">{{ profile.profession }}</p>
+              <p class="card-text">{{ profile.biodata }}</p>
+              <div class="star">
+                <!-- <p class="card-text">{{ profile.star }}</p> -->
+                <!-- <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span> -->
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+    </div>
+  </div>
+
+
+  <script src="{%static 'workerPage.js'%}"></script>
+</body>
+
+</html>
