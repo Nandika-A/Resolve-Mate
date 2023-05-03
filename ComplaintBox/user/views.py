@@ -106,14 +106,14 @@ def editworkerprofile(request):
         
         if worker_form.is_valid():
             user=request.user.email
-            c=CustomUser.objects.get(email=user)
-            u=UserProfile.objects.get(user=c)
+            Cust_User=CustomUser.objects.get(email=user)
+            User_details=UserProfile.objects.get(user=Cust_User)
             worker1 = WorkerProfile()
             worker_form.save()
-            worker1.worker=u 
+            worker1.worker=User_details
             worker1.biodata=worker_form.cleaned_data.get("biodata")
             worker1.profession=worker_form.cleaned_data.get("profession")
-
+            worker1.upi=worker_form.cleaned_data.get("upi")
             worker1.save()
 
             return redirect('home')

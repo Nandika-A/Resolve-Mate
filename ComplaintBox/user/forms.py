@@ -38,7 +38,7 @@ class UpdateProfileForm(forms.ModelForm):
 class UpdateWorkerForm(forms.ModelForm):
     biodata= forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
     profession=forms.CharField()
-    
+    upi=forms.CharField()
     class Meta:
         model = WorkerProfile
         fields = ['biodata', 'profession']

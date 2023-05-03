@@ -169,16 +169,15 @@
                                     class="display-26 text-secondary me-2 font-weight-600">Profession:</span>
                                     {{ worker.profession }}</li>
                             <li class="mb-2 mb-xl-3 display-28"><span
-                                    class="display-26 text-secondary me-2 font-weight-600">Experience:</span> 10 Years
-                            </li>
+                                    class="display-26 text-secondary me-2 font-weight-600">UPI:</span> 
+
+                                    {{ worker.upi }}</li>
                             <li class="mb-2 mb-xl-3 display-28"><span
                                     class="display-26 text-secondary me-2 font-weight-600">Email:</span> 
                                     {{ worker.worker.user.email }}
                             </li>
 
-                            <li class="display-28"><span
-                                    class="display-26 text-secondary me-2 font-weight-600">Phone:</span> 507 - 541 -
-                                4567</li>
+                            
                         </ul>
                         <ul class="social-icon-style1 list-unstyled mb-0 ps-0">
                             <li><a href="#!"><i class="ti-twitter-alt"></i></a></li>
@@ -195,12 +194,7 @@
     <div class="col-lg-12 mb-4 mb-sm-5 px-3 py-2">
         <div>
             <span class="section-title text-primary mb-3 mb-sm-4">About Me</span>
-            <p>Edith is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-                standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-                to make a type specimen book.</p>
-            <p class="mb-0">It is a long established fact that a reader will be distracted by the readable content of a
-                page when looking at its layout. The point of using Lorem is that it is Ipsum is that it has a more-or-less normal
-                distribution of letters, as opposed.</p>
+            <p>{{ worker.biodata }}</p>
         </div>
     </div>
 

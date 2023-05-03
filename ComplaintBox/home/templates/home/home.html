@@ -21,6 +21,11 @@
         <li> <a href="{% url 'about' %}">About</a> </li>
         <li> <a href="#services">Services</a> </li>
         <li> <a href="#contact">Contact Us</a> </li>
+        
+        <li> <a href="{% url 'history' %}">Task History</a> </li>
+        {% if iser.is_staff or user.is_superuser %}
+            <li> <a href="{% url 'adminpage' %}">Admin Page</a> </li>
+        {% endif %}
         </ul>
         <div class="right-nav vis-nav-resp">
             

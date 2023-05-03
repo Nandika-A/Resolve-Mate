@@ -40,7 +40,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     
     email = models.EmailField(verbose_name="Email", null=True, unique=True, max_length=100)
-
+    
     USERNAME_FIELD = "email" # make the user log in with the email
     REQUIRED_FIELDS = ["username"]
 
@@ -48,7 +48,7 @@ class CustomUser(AbstractUser):
 
 class UserProfile(models.Model):
 
-    user = models.OneToOneField(CustomUser,null =True, on_delete=models.SET_NULL)
+    user = models.OneToOneField(CustomUser,null =True, on_delete=models.CASCADE)
     
     image=models.ImageField(default='default.jpg',upload_to='profile_pics')  #images will get saved in directory called profile_pics
     
@@ -82,7 +82,7 @@ class WorkerProfile(models.Model):
     profession = models.CharField(max_length=100, default=None)
     biodata = models.TextField(default = None)
     no_of_jobs = models.IntegerField(default=0)
-    
+    upi=models.CharField(max_length=50,default=None)
 
     #average_star=models.DecimalField(max_digits=3,decimal_places=2,default=5.00)
     #UPI = models.CharField(max_length=100, default=None)
