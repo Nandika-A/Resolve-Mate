@@ -106,34 +106,34 @@ def profile_detail(request, pk):
             #worker.no_of_jobs += 1
             taskHistory.save()
             
-            # sending email to user after lodging complaint
-            # send_mail(
-            # 'New Complaint lodged',
-            # 'Your complaint has been successfully lodged. Kindly wait for approval.\n'+
-            # 'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
-            # 'basicuser338@gmail.com',
-            # [userprofile.user.email],
-            # )
+            #sending email to user after lodging complaint
+            send_mail(
+            'New Complaint lodged',
+            'Your complaint has been successfully lodged. Kindly wait for approval.\n'+
+            'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
+            'basicuser338@gmail.com',
+            [userprofile.user.email],
+            )
             
-            # # sending approval email to worker
-            # html_content = render_to_string('email_template.html'
-            #                                 ,
-            #                                 {
+            # sending approval email to worker
+            html_content = render_to_string('email_template.html'
+                                            ,
+                                            {
                                                 
-            #                                     "title" : taskHistory.title,
-            #                                     "complaint" : taskHistory.complaint,
-            #                                     "id" : taskHistory.id
+                                                "title" : taskHistory.title,
+                                                "complaint" : taskHistory.complaint,
+                                                "id" : taskHistory.id
                                                
-            #                                  }) # render with dynamic value
-            # text_content = strip_tags(html_content)
-            # msg = EmailMultiAlternatives(
-            #     'New Complaint lodged, send your approval.',
-            #     'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
-            #     'basicuser338@gmail.com',
-            #     [w_email]
-            #     )
-            # msg.attach_alternative(html_content, "text/html")
-            # msg.send()
+                                             }) # render with dynamic value
+            text_content = strip_tags(html_content)
+            msg = EmailMultiAlternatives(
+                'New Complaint lodged, send your approval.',
+                'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
+                'basicuser338@gmail.com',
+                [w_email]
+                )
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
 
     return render(request, 'home/WorkerProfile_detail.html', context)
 
