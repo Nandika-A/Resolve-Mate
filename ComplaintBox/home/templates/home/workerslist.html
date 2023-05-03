@@ -80,16 +80,16 @@
 
 
     <!--filter till now-->
-    
+
     <div class="section-right overflow-auto">
       {% for profile in profiles %}
       <div class="card mb-4 overflow-auto" style="max-width: 540px;">
         <div class="row g-0">
           <div class="col-md-4">
             <img class="img-fluid rounded-start" src="{{ profile.worker.image.url }}">
-            
+
           </div>
-          
+
           <div class="col-md-8">
             <div class="card-body">
               <h5 class="card-title"><a href="{% url 'profile-detail' profile.id %}">{{ profile.worker.user.username }}</a></h5>
@@ -110,7 +110,7 @@
         </div>
       </div>
     {% endfor %}
-    
+
     </div>
   </div>
 

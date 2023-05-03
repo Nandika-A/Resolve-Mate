@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{%static 'homepage2.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="{%static 'homepageResp.css'%}">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"> -->
+</head>
+<body>
+    <nav class="navbarm bgm h-nav-resp">
+        <ul class="nav-listm vis-nav-resp">
+            <div class="logom">
+                <img src="{%static 'imgs1/homepageLogo.png'%}" alt="Logo">
+            </div>
+            <li> <a href="{% url 'home' %}">Home</a> </li>
+        <li> <a href="{% url 'about' %}">About</a> </li>
+        <li> <a href="#services">Services</a> </li>
+        <li> <a href="#contact">Contact Us</a> </li>
+        <li> <a href="history">Task History</a> </li>
+        </ul>
+        <div class="right-nav vis-nav-resp">
+            
+            {% if user.is_authenticated %}
+                <button class="btnm"><a href="{% url 'user:profile' %}">Profile</a></button>
+                <button class="btnm"><a href="{% url 'user:logout' %}">Logout</a></button>
+              {% else %}
+                <a class="nav-item nav-link" href="{% url 'user:login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'user:signup' %}">Register</a>
+              {% endif %}
+            
+
+        </div>
+
+        <div class="burger">
+            <div class="lineb"></div>
+            <div class="lineb"></div>
+            <div class="lineb"></div>
+        </div>
+    </nav>
+
+    <section class="background firstSection ">
+        <div class="box-main">
+            <div class="firstHalf">
+                <p class="section-text">
+                    THE GOAL AS A COMPANY IS TO HAVE CUSTOMER SERVICE THAT IS NOT JUST THE BEST BUT LEGENDARY
+                </p>
+
+                <div class="buttons">
+                    <button class="btnm btn-section"><a href="{% url 'homepage' %}">Choose from worker's list</a></button>
+                    <button class="btnm btn-section"><a href="{% url 'complaintform' %}">Want admin to assign?</a></button>
+                    <button class="btnm btn-section"><a href="{% url 'complaintform' %}">Automatic Assignment</a></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <h1 class="services-h line" id="services">Services We Offer</h1>
+
+    <section class="section">
+        <div class="section1">
+            <h1>PLUMBER</h1>
+            <p>One stop solution to Leaky Pipes, Low Water Pressure, Clogged Drains</p>
+        </div>
+        <div class="box">
+            <img src="{%static 'imgs1/plumbing.jpg'%}" alt="">
+        </div>
+
+    </section>
+    <section class="section section-left">
+        <div class="section1">
+            <h1>ELECTRICIAN</h1>
+            <p>Facing high bills, flickering lights, improper electrical wiring? <br>
+            Contact Us.</p>
+        </div>
+        <div class="box">
+            <img src="{%static 'imgs1/electrici.jpg'%}" alt="">
+        </div>
+
+    </section>
+    <section class="section">
+        <div class="section1">
+            <h1>CARPENTAR</h1>
+            <p>Uneven Surface finish, dents in doors, loose joints, fuzzy wood</p>
+        </div>
+        <div class="box">
+            <img src="{%static 'imgs1/carpentar.jpg'%}" alt="">
+        </div>
+
+    </section>
+<div class="howitabove">
+    <h1 class="services-h line">How It Works</h1>
+    <div class="howit">
+        <div class="box1">
+            <div class="boximg boximg1">
+                <i class="fa-solid fa-1"></i>
+            </div>
+            <div class="boxtext">
+                <h5>Login</h5>
+                <p>Login on the webiste using your registered email id</p>
+            </div>
+        </div>
+        <div class="box1">
+            <div class="boximg boximg2">
+                <i class="fa-solid fa-2"></i>
+            </div>
+            <div class="boxtext">
+                <h5>Fill Your Complaint</h5>
+                <p>Either choose your preferred worker or allow admin to choose for you</p>
+            </div>
+        </div>
+        <div class="box1">
+            <div class="boximg boximg3">
+                <i class="fa-solid fa-3"></i>
+            </div>
+            <div class="boxtext">
+                <h5>Connect With Worker</h5>
+                <p>Discuss your problem with the worker and after completion pay the required amount of money</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="testimonials">
+        <div class="inner">
+          <h1 class="services-h test-h">Testimonials</h1>
+          <div class="border"></div>
+  
+          <div class="row">
+            <div class="col">
+              <div class="testimonial">
+                <img src="{%static 'imgs1/p1.png'%}" alt="">
+                <div class="name">Full name</div>
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+  
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                </p>
+              </div>
+            </div>
+  
+            <div class="col">
+              <div class="testimonial">
+                <img src="{%static 'imgs1/p2.png'%}" alt="">
+                <div class="name">Full name</div>
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+  
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                </p>
+              </div>
+            </div>
+  
+            <div class="col">
+              <div class="testimonial">
+                <img src="{%static 'imgs1/p3.png'%}" alt="">
+                <div class="name">Full name</div>
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+  
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"> -->
+
+    
+<script src="{%static 'homepage.js'%}"></script>
+
+</body>
+</html>
