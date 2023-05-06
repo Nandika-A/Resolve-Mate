@@ -210,8 +210,8 @@ MEDIA_URL = '/media/'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'basicuser338@gmail.com'
-EMAIL_HOST_PASSWORD = 'pcoifztaswpvfjnh'
+EMAIL_HOST_USER = 'manojiyer445@gmail.com'
+EMAIL_HOST_PASSWORD = 'pspxpbchrnlriety'
 EMAIL_PORT = '587'
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 LOGIN_REDIRECT_URL = 'homepage'

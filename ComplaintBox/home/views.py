@@ -198,32 +198,32 @@ def detailed_task(request, pk):
     if request.method =='GET': #and 'completed' in request.post:
         task.status='COMPLETED'
         task.save()
-        # send_mail(
-        #     'Thank you for using our service',
-        #     'Please rate '+task.assigned.worker.user.username+'\n',
-        #     'basicuser338@gmail.com',
-        #     [request.user.email],
-        #     )
-        # #sending mail to user
-        # html_content = render_to_string('rating_template.html'
-        #                                     ,
-        #                                     {
-        #                                         "image" : task,
-        #                                         "username" : task,
-        #                                         "worker" : task,
-        #                                         "task":task,
-        #                                         #"id" : taskHistory.id
+        send_mail(
+            'Thank you for using our service',
+            'Please rate '+task.assigned.worker.user.username+'\n',
+            'manojiyer445@gmail.com',
+            [request.user.email],
+            )
+        #sending mail to user
+        html_content = render_to_string('rating_template.html'
+                                            ,
+                                            {
+                                                "image" : task,
+                                                "username" : task,
+                                                "worker" : task,
+                                                "task":task,
+                                                #"id" : taskHistory.id
                                                
-        #                                      }) # render with dynamic value
-        # text_content = strip_tags(html_content)
-        # msg = EmailMultiAlternatives(
-        #         'Thank you for using our service, please rate us!.',
-        #         'Title:' + task.title +'\n',
-        #         'basicuser338@gmail.com',
-        #         [request.user.email]
-        #         )
-        # msg.attach_alternative(html_content, "text/html")
-        # msg.send()
+                                             }) # render with dynamic value
+        text_content = strip_tags(html_content)
+        msg = EmailMultiAlternatives(
+                'Thank you for using our service, please rate us!.',
+                'Title:' + task.title +'\n',
+                'manojiyer445338@gmail.com',
+                [request.user.email]
+                )
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
         
         
     else:

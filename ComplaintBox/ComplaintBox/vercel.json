@@ -1,0 +1,14 @@
+{
+        "builds": [
+        {
+    "src": "ComplaintBox/wsgi.py",
+    "use": "@vercel/python"
+    }
+    ],
+    "routes": [
+    {
+    "src": "/(.*)",
+    "dest": "ComplaintBox/wsgi.py"
+    }
+    ]
+    }
