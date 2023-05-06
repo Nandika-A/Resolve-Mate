@@ -67,21 +67,32 @@ def workerslist(request):
     
 
 def complaintform(request):
-    context = {}
+    professionfilter = WorkerProfile.objects.values_list('profession')
+    list1=[]
+    for profession_received in professionfilter:
+        if profession_received[0] not in list1:
+            list1+=[profession_received[0]]
+    context = {"list1":list1}
+    # print(request)
+    # print(request.POST)
     if request.method == "POST":
+        # print("wfk0")
+        # print(request.user)
         taskHistory = TaskHistory()
         taskHistory.profession = request.POST.get('wtype')
+        # print(taskHistory.profession)
         taskHistory.title = request.POST.get('title')
         taskHistory.complaint = request.POST.get('complaint')
-        taskHistory.assigned_by = request.user
+        taskHistory.assignedby = UserProfile.objects.get(user=request.user)
         taskHistory.save()
-        send_mail(
-            'Complaint lodged',
-            'Your complaint has been successfully lodged.\n'+
-            'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
-            'basicuser338@gmail.com',
-            [taskHistory.assigned_by.user.email],
-            )
+        # send_mail(
+        #     'Complaint lodged',
+        #     'Your complaint has been successfully lodged.\n'+
+        #     'Title:' + taskHistory.title + '\nComplaint:' + taskHistory.complaint+'\n',
+        #     'basicuser338@gmail.com',
+        #     [taskHistory.assigned_by.user.email],
+        #     )
+        
 
     return render(request, "home/tasks.html", context)
 

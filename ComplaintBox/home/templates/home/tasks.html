@@ -44,13 +44,16 @@
 <div class="body-form">
   <div class="container">
     <h1 class="form-title">Complaint Form</h1>
-    <form action="." method = "POST">
+    <form action="{% url 'complaintform' %}" method = "post">
       {% csrf_token %}
       <div class="main-form-info">
         <div class="input-box">
-          <label for="">Worker Type:</label>
-          <select class="select-box" id="wtype" name="Worker-Type">
+          <label for="wtype">Worker Type:</label>
+          <select class="select-box" id="wtype" name="wtype">
             <option value="">Select worker required</option>
+              {% for pf in list1 %}
+              <option value="{{ pf }}">{{ pf}}</option>
+              {% endfor %}
             <!-- <option value="Electrician">Electrician</option>
             <option value="Plumber">Plumber</option>
             <option value="Carpenter">Carpenter</option>
@@ -61,14 +64,16 @@
           <div class="arrow"></div>
         </div>
         <div class="input-box">
-          <label for="">Title:</label>
+          <!-- <label for="">Title:</label>
           <select class="select-box" id="title" name="title">
-            <option value="">Select complaint</option>
+            <option value="">Select complaint</option> -->
+            <label for="title">Title:</label>
+          <textarea name="title" id="title" cols="79" rows="1" placeholder="Enter complaint title"></textarea>
           </select>
           <div class="arrow arrow2"></div>
         </div>
         <div class="input-box">
-          <label for="">Complaint:</label>
+          <label for="complaint">Complaint:</label>
           <textarea name="complaint" id="complaint" cols="79" rows="8" placeholder="Enter Custom Complaint"></textarea>
         </div>
         
