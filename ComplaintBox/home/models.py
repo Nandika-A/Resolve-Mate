@@ -4,6 +4,7 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from user.models import UserProfile , WorkerProfile
+from django.contrib.auth import get_user
 #from django.contrib.postgres.fields import ArrayField
 
 class TaskHistory(models.Model):
@@ -19,7 +20,6 @@ class TaskHistory(models.Model):
     #  Comments=ArrayField(
     #      models.TextField(blank=True,default = None))
      
-     Comments = models.TextField(blank=True,default = None)
      def get_absolute_url(self):
         return reverse('detailed_task', kwargs={'pk':self.pk})
      def __str__(self):
