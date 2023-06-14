@@ -286,7 +286,6 @@ class DeleteComplaintView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-@login_required
 def displayhistory(request):
     if request.user.is_authenticated:
         
@@ -300,7 +299,9 @@ def displayhistory(request):
             'tasks' : tasks,
             'request.user' : request.user
             
-            }      
+            }  
+    else:
+        return render(request, 'home/loginerror.html') 
     return render(request, 'home/displayhistory.html',context)
         
 def approve(request, pk):
